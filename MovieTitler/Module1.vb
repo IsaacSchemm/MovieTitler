@@ -132,14 +132,27 @@ Public Class MovieTitler
                     logger.Debug("Tweet timer is not running - not turning on user stream yet.")
                 End If
 
+                Auth.SetCredentials(Credentials)
+
+                Dim u As IUserIdentifier = Nothing
                 Auth.ExecuteOperationWithCredentials(Credentials, Sub()
-                                                                      Dim u = User.GetAuthenticatedUser()
+                                                                      u = User.GetAuthenticatedUser()
                                                                       If u Is Nothing Then
                                                                           logger.Error(ExceptionHandler.GetLastException())
                                                                           Return
                                                                       End If
                                                                       Me.MyId = u.Id
-                                                                      Dim tweets = Timeline.GetUserTimeline(u, 30)
+                                                                  End Sub)
+
+                Auth.ExecuteOperationWithCredentials(Credentials, Sub()
+                                                                      If u Is Nothing Then
+                                                                          Return
+                                                                      End If
+
+                                                                      Dim params As New Parameters.UserTimelineParameters
+                                                                      params.ExcludeReplies = True
+                                                                      params.MaximumNumberOfTweetsToRetrieve = 30
+                                                                      Dim tweets = Timeline.GetUserTimeline(u, params)
                                                                       For Each tweet In tweets
                                                                           If Not tweet.Text.StartsWith("@") Then
                                                                               logger.Debug("Found previous tweet: " & tweet.Text)
