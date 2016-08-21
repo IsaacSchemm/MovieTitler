@@ -135,7 +135,7 @@ Public Class MovieTitler
         Auth.ExecuteOperationWithCredentials(Credentials, Sub()
                                                               Dim u = User.GetAuthenticatedUser()
                                                               Me.MyId = u.Id
-                                                              Dim tweets = Timeline.GetUserTimeline(u, 100)
+                                                              Dim tweets = Timeline.GetUserTimeline(u, 30)
                                                               For Each tweet In tweets
                                                                   If Not tweet.Text.StartsWith("@") Then
                                                                       Console.WriteLine("Found previous tweet: " & tweet.Text)
@@ -163,6 +163,10 @@ Public Class MovieTitler
             Dim part2 = Subtitles(index2)
             newTitle = part1 & part2
 
+            If FullTitles.Contains(newTitle) Then
+                Continue Do
+            End If
+
             If i >= 50 Then
                 Exit Do
             End If
@@ -178,7 +182,10 @@ Public Class MovieTitler
         If newTitle IsNot Nothing Then
             Console.WriteLine(newTitle)
             PreviousTweets.Add(newTitle)
-            Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
+            If PreviousTweets.Count > 30 Then
+                PreviousTweets.RemoveAt(0)
+            End If
+            'Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
         End If
     End Sub
 
