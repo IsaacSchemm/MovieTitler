@@ -30,30 +30,24 @@ Module Module1
 
         'Return
 
-        'HostFactory.Run(Sub(x)
-        '                    x.Service(Of MovieTitler)(Sub(s)
-        '                                                  s.ConstructUsing(Function(name)
-        '                                                                       Return New MovieTitler()
-        '                                                                   End Function)
-        '                                                  s.WhenStarted(Sub(tc)
-        '                                                                    tc.ServiceStart()
-        '                                                                End Sub)
-        '                                                  s.WhenStopped(Sub(tc)
-        '                                                                    tc.ServiceStop()
-        '                                                                End Sub)
-        '                                              End Sub)
+        HostFactory.Run(Sub(x)
+                            x.Service(Of MovieTitler)(Sub(s)
+                                                          s.ConstructUsing(Function(name)
+                                                                               Return New MovieTitler()
+                                                                           End Function)
+                                                          s.WhenStarted(Sub(tc)
+                                                                            tc.ServiceStart()
+                                                                        End Sub)
+                                                          s.WhenStopped(Sub(tc)
+                                                                            tc.ServiceStop()
+                                                                        End Sub)
+                                                      End Sub)
 
-        '                    x.RunAsLocalSystem
-        '                    x.SetDescription("Twitter bot that combines movie titles and subtitles")
-        '                    x.SetDisplayName("Twitter Movie Titler")
-        '                    x.SetServiceName("MovieTitler")
-        '                End Sub)
-
-        Dim mt As New MovieTitler()
-        For i As Integer = 1 To 1
-            mt.SendTweet()
-            Threading.Thread.Sleep(1000 * 60 * 2)
-        Next
+                            x.RunAsLocalSystem
+                            x.SetDescription("Twitter bot that combines movie titles and subtitles")
+                            x.SetDisplayName("Twitter Movie Titler")
+                            x.SetServiceName("MovieTitler")
+                        End Sub)
     End Sub
 
 End Module
@@ -94,11 +88,15 @@ Public Class MovieTitler
         Console.WriteLine("Found " & Me.Subtitles.Count & " subtitles")
         Me.Used = New List(Of Tuple(Of Integer, Integer))
 
-        TweetTimer = New Timer(1000 * 60 * 30) 'New Timer(1000 * 60 * 60 * 24)
+        TweetTimer = New Timer()
         AddHandler TweetTimer.Elapsed, AddressOf SendTweet
     End Sub
 
     Public Sub SendTweet()
+        Console.WriteLine(Date.Now)
+
+        TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
+
         If Credentials Is Nothing Then
             Dim jsonObj = JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(File.ReadAllText(ConfigurationManager.AppSettings("KeysFile")))
 
@@ -124,12 +122,22 @@ Public Class MovieTitler
         Loop
 
         Auth.ExecuteOperationWithCredentials(Credentials, Sub()
-                                                              Dim t = Tweet.PublishTweet(newTitle)
+                                                              Tweet.PublishTweet(newTitle)
                                                               Console.WriteLine(newTitle)
                                                           End Sub)
     End Sub
 
     Public Sub ServiceStart()
+        Dim startTime = ConfigurationManager.AppSettings("StartTime")
+        If startTime IsNot Nothing Then
+            Dim startAt = Date.Today + TimeSpan.Parse(ConfigurationManager.AppSettings("StartTime"))
+            If startAt < Date.Now Then
+                startAt = startAt.AddDays(1)
+            End If
+            TweetTimer.Interval = (startAt - Date.Now).TotalMilliseconds
+        Else
+            TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
+        End If
         TweetTimer.Start()
     End Sub
 
