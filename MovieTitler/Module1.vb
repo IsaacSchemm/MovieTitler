@@ -16,7 +16,7 @@ Module Module1
         '' Init the authentication process And store the related `AuthenticationContext`.
         'Dim authenticationContext = AuthFlow.InitAuthentication(appCredentials)
 
-        '' Go to the URL so that Twitter authenticates the user And gives him a PIN code.
+        '' Go to the URL so that Twitter authenticates the user And gives them a PIN code.
         'Process.Start("firefox", authenticationContext.AuthorizationURL)
 
         '' Ask the user to enter the pin code given by Twitter
@@ -55,7 +55,7 @@ End Module
 Public Class MovieTitler
     Private Titles As IReadOnlyList(Of String)
     Private Subtitles As IReadOnlyList(Of String)
-    Private Used As List(Of Tuple(Of Integer, Integer))
+    Private PreviousTweets As List(Of String)
 
     Private Credentials As ITwitterCredentials
     Private TweetTimer As Timer
@@ -86,16 +86,6 @@ Public Class MovieTitler
         Console.WriteLine("Found " & Me.Titles.Count & " titles")
         Me.Subtitles = subtitles.Distinct().ToList()
         Console.WriteLine("Found " & Me.Subtitles.Count & " subtitles")
-        Me.Used = New List(Of Tuple(Of Integer, Integer))
-
-        TweetTimer = New Timer()
-        AddHandler TweetTimer.Elapsed, AddressOf SendTweet
-    End Sub
-
-    Public Sub SendTweet()
-        Console.WriteLine(Date.Now)
-
-        TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
 
         If Credentials Is Nothing Then
             Dim jsonObj = JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(File.ReadAllText(ConfigurationManager.AppSettings("KeysFile")))
@@ -106,25 +96,52 @@ Public Class MovieTitler
                                                  jsonObj("AccessTokenSecret"))
         End If
 
+        Me.PreviousTweets = New List(Of String)
+        Auth.ExecuteOperationWithCredentials(Credentials, Sub()
+                                                              Dim u = User.GetAuthenticatedUser()
+                                                              Dim tweets = Timeline.GetUserTimeline(u, 100)
+                                                              For Each tweet In tweets
+                                                                  Console.WriteLine("Found previous tweet: " & tweet.Text)
+                                                                  Me.PreviousTweets.Add(tweet.Text)
+                                                              Next
+                                                          End Sub)
+
+        TweetTimer = New Timer()
+        AddHandler TweetTimer.Elapsed, AddressOf SendTweet
+    End Sub
+
+    Public Sub SendTweet()
+        Console.WriteLine(Date.Now)
+
+        TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
+
         Dim i = 0
         Dim newTitle As String = Nothing
 
         Do While newTitle Is Nothing
             Dim index1 = R.Next(0, Titles.Count)
             Dim index2 = R.Next(0, Subtitles.Count)
-            Dim indices = New Tuple(Of Integer, Integer)(index1, index2)
-            If Used.Contains(indices) And i < 10 Then
-                i += 1
-            Else
-                Used.Add(indices)
-                newTitle = Titles(index1) & Subtitles(index2)
+            Dim part1 = Titles(index1)
+            Dim part2 = Subtitles(index2)
+            newTitle = part1 & part2
+
+            If i >= 50 Then
+                Exit Do
             End If
+
+            Dim similar = PreviousTweets.Where(Function(s) s.StartsWith(part1) Or s.EndsWith(part2))
+            If similar.Any() Then
+                newTitle = Nothing
+            End If
+
+            i += 1
         Loop
 
-        Auth.ExecuteOperationWithCredentials(Credentials, Sub()
-                                                              Tweet.PublishTweet(newTitle)
-                                                              Console.WriteLine(newTitle)
-                                                          End Sub)
+        If newTitle IsNot Nothing Then
+            Console.WriteLine(newTitle)
+            PreviousTweets.Add(newTitle)
+            Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
+        End If
     End Sub
 
     Public Sub ServiceStart()
@@ -134,6 +151,7 @@ Public Class MovieTitler
             If startAt < Date.Now Then
                 startAt = startAt.AddDays(1)
             End If
+            Console.WriteLine("Will run at: " & startAt)
             TweetTimer.Interval = (startAt - Date.Now).TotalMilliseconds
         Else
             TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
