@@ -2,8 +2,10 @@
 Imports System.IO
 Imports System.Timers
 Imports Newtonsoft.Json
+Imports NLog
 Imports Topshelf
 Imports Tweetinvi
+Imports Tweetinvi.Events
 Imports Tweetinvi.Models
 Imports Tweetinvi.Streaming
 
@@ -54,6 +56,8 @@ Module Module1
 End Module
 
 Public Class MovieTitler
+    Private Shared logger As Logger = LogManager.GetCurrentClassLogger()
+
     Private FullTitles As IReadOnlyList(Of String)
     Private Titles As IReadOnlyList(Of String)
     Private Subtitles As IReadOnlyList(Of String)
@@ -68,6 +72,8 @@ Public Class MovieTitler
     Private ReplyLimit As Integer
 
     Public Sub New()
+        logger.Info("Constructing MovieTitler")
+
         Dim sourceFileContents = File.ReadAllLines(ConfigurationManager.AppSettings("SourceFile"))
         Dim fullTitles As New List(Of String)
         Dim titles As New List(Of String)
@@ -89,12 +95,12 @@ Public Class MovieTitler
         Next
 
         Me.FullTitles = fullTitles
-        Console.WriteLine("Found " & fullTitles.Count & " movies")
+        logger.Info("Found " & fullTitles.Count & " movies")
 
         Me.Titles = titles.Distinct().ToList()
-        Console.WriteLine("Found " & Me.Titles.Count & " titles")
+        logger.Info("Found " & Me.Titles.Count & " titles")
         Me.Subtitles = subtitles.Distinct().ToList()
-        Console.WriteLine("Found " & Me.Subtitles.Count & " subtitles")
+        logger.Info("Found " & Me.Subtitles.Count & " subtitles")
 
         If Credentials Is Nothing Then
             Dim jsonObj = JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(File.ReadAllText(ConfigurationManager.AppSettings("KeysFile")))
@@ -107,29 +113,7 @@ Public Class MovieTitler
 
         ReplyLimit = 6
         UserStream = Tweetinvi.Stream.CreateUserStream(Credentials)
-        AddHandler UserStream.TweetCreatedByAnyoneButMe, Sub(sender, args)
-                                                             If args.Tweet.UserMentions.Any(Function(x) x.Id = MyId) And Not args.Tweet.IsRetweet Then
-                                                                 If ReplyLimit <= 0 Then
-                                                                     Return
-                                                                 End If
-                                                                 ReplyLimit -= 1
-                                                                 Task.Delay(60000).ContinueWith(Sub(t) ReplyLimit += 1)
-
-                                                                 Dim split = args.Tweet.Text.Split(""""c)
-                                                                 If split.Length = 3 AndAlso split(2).EndsWith("?") Then
-                                                                     Dim segment = split(1)
-                                                                     Dim movies = Me.FullTitles.Where(Function(s) s.IndexOf(segment, StringComparison.InvariantCultureIgnoreCase) >= 0).OrderBy(Function(s) R.Next())
-                                                                     Dim text = "@" & args.Tweet.CreatedBy.ScreenName & " Sorry, I don't know any movies that have that in the title."
-                                                                     If (movies.Any()) Then
-                                                                         text = "@" & args.Tweet.CreatedBy.ScreenName & " I found these movies: " & String.Join("; ", movies)
-                                                                         If text.Length > 140 Then
-                                                                             text = text.Substring(0, 139) + ChrW(8230)
-                                                                         End If
-                                                                     End If
-                                                                     Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(text))
-                                                                 End If
-                                                             End If
-                                                         End Sub
+        AddHandler UserStream.TweetCreatedByAnyoneButMe, AddressOf ReplyHandler
 
         Me.PreviousTweets = New List(Of String)
         Auth.ExecuteOperationWithCredentials(Credentials, Sub()
@@ -138,7 +122,7 @@ Public Class MovieTitler
                                                               Dim tweets = Timeline.GetUserTimeline(u, 30)
                                                               For Each tweet In tweets
                                                                   If Not tweet.Text.StartsWith("@") Then
-                                                                      Console.WriteLine("Found previous tweet: " & tweet.Text)
+                                                                      logger.Debug("Found previous tweet: " & tweet.Text)
                                                                       Me.PreviousTweets.Add(tweet.Text)
                                                                   End If
                                                               Next
@@ -148,45 +132,78 @@ Public Class MovieTitler
         AddHandler TweetTimer.Elapsed, AddressOf SendTweet
     End Sub
 
+    Private Sub ReplyHandler(sender As Object, args As TweetReceivedEventArgs)
+        Try
+            If args.Tweet.UserMentions.Any(Function(x) x.Id = MyId) And Not args.Tweet.IsRetweet Then
+                If ReplyLimit <= 0 Then
+                    Return
+                End If
+                ReplyLimit -= 1
+                Task.Delay(60000).ContinueWith(Sub(t) ReplyLimit += 1)
+
+                Dim split = args.Tweet.Text.Split(""""c)
+                If split.Length = 3 AndAlso split(2).EndsWith("?") Then
+                    Dim segment = split(1)
+                    Dim movies = Me.FullTitles.Where(Function(s) s.IndexOf(segment, StringComparison.InvariantCultureIgnoreCase) >= 0).OrderBy(Function(s) R.Next())
+                    Dim text = "@" & args.Tweet.CreatedBy.ScreenName & " Sorry, I don't know any movies that have that in the title."
+                    If (movies.Any()) Then
+                        text = "@" & args.Tweet.CreatedBy.ScreenName & " I found these movies: " & String.Join("; ", movies)
+                        If text.Length > 140 Then
+                            text = text.Substring(0, 139) + ChrW(8230)
+                        End If
+                    End If
+                    logger.Info(Date.Now & ": " & text)
+                    Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(text))
+                End If
+            End If
+        Catch ex As Exception
+            logger.Error(ex)
+        End Try
+    End Sub
+
     Public Sub SendTweet()
-        Console.WriteLine(Date.Now)
+        Try
+            logger.Trace(Date.Now)
 
-        TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
+            TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
 
-        Dim i = 0
-        Dim newTitle As String = Nothing
+            Dim i = 0
+            Dim newTitle As String = Nothing
 
-        Do While newTitle Is Nothing
-            Dim index1 = R.Next(0, Titles.Count)
-            Dim index2 = R.Next(0, Subtitles.Count)
-            Dim part1 = Titles(index1)
-            Dim part2 = Subtitles(index2)
-            newTitle = part1 & part2
+            Do While newTitle Is Nothing
+                Dim index1 = R.Next(0, Titles.Count)
+                Dim index2 = R.Next(0, Subtitles.Count)
+                Dim part1 = Titles(index1)
+                Dim part2 = Subtitles(index2)
+                newTitle = part1 & part2
 
-            If FullTitles.Contains(newTitle) Then
-                Continue Do
+                If FullTitles.Contains(newTitle) Then
+                    Continue Do
+                End If
+
+                If i >= 50 Then
+                    Exit Do
+                End If
+
+                Dim similar = PreviousTweets.Where(Function(s) s.StartsWith(part1) Or s.EndsWith(part2))
+                If similar.Any() Then
+                    newTitle = Nothing
+                End If
+
+                i += 1
+            Loop
+
+            If newTitle IsNot Nothing Then
+                logger.Info(Date.Now & ": " & newTitle)
+                PreviousTweets.Add(newTitle)
+                If PreviousTweets.Count > 30 Then
+                    PreviousTweets.RemoveAt(0)
+                End If
+                Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
             End If
-
-            If i >= 50 Then
-                Exit Do
-            End If
-
-            Dim similar = PreviousTweets.Where(Function(s) s.StartsWith(part1) Or s.EndsWith(part2))
-            If similar.Any() Then
-                newTitle = Nothing
-            End If
-
-            i += 1
-        Loop
-
-        If newTitle IsNot Nothing Then
-            Console.WriteLine(newTitle)
-            PreviousTweets.Add(newTitle)
-            If PreviousTweets.Count > 30 Then
-                PreviousTweets.RemoveAt(0)
-            End If
-            'Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
-        End If
+        Catch ex As Exception
+            logger.Error(ex)
+        End Try
     End Sub
 
     Public Sub ServiceStart()
@@ -196,7 +213,7 @@ Public Class MovieTitler
             If startAt < Date.Now Then
                 startAt = startAt.AddDays(1)
             End If
-            Console.WriteLine("Will run at: " & startAt)
+            logger.Info("Will run at: " & startAt)
             TweetTimer.Interval = (startAt - Date.Now).TotalMilliseconds
         Else
             TweetTimer.Interval = Double.Parse(If(ConfigurationManager.AppSettings("IntervalMs"), "60000"))
