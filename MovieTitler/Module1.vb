@@ -105,7 +105,7 @@ Public Class MovieTitler
                                                  jsonObj("AccessTokenSecret"))
         End If
 
-        ReplyLimit = 2
+        ReplyLimit = 6
         UserStream = Tweetinvi.Stream.CreateUserStream(Credentials)
         AddHandler UserStream.TweetCreatedByAnyoneButMe, Sub(sender, args)
                                                              If args.Tweet.UserMentions.Any(Function(x) x.Id = MyId) And Not args.Tweet.IsRetweet Then
