@@ -57,20 +57,34 @@ End Module
 
 Public Class MovieTitler
     Private Shared logger As Logger = LogManager.GetCurrentClassLogger()
-
-    Private InitTask As Task
-
-    Private FullTitles As IReadOnlyList(Of String)
-    Private Titles As IReadOnlyList(Of String)
-    Private Subtitles As IReadOnlyList(Of String)
-    Private PreviousTweets As List(Of String)
-
-    Private Credentials As ITwitterCredentials
-    Private TweetTimer As Timer
     Private Shared R As Random = New Random()
 
+    ' This task is launched when the class is initialized, and it creates everything below except TweetTimer.
+    Private InitTask As Task
+
+    ' A list of movie titles. Read from the SourceFile.
+    Private FullTitles As IReadOnlyList(Of String)
+
+    ' Titles and subtitles of movies.
+    Private Titles As IReadOnlyList(Of String)
+    Private Subtitles As IReadOnlyList(Of String)
+
+    ' The 30 most recent tweets made by this account that were not replies. Used to avoid reusing a title/subtitle in a short amount of time.
+    Private PreviousTweets As List(Of String)
+
+    ' Twitter credentials, read from KeysFile.
+    Private Credentials As ITwitterCredentials
+
+    ' Timer for periodically sending a tweet.
+    Private TweetTimer As Timer
+
+    ' Twitter user ID of the account this bot is using.
     Private MyId As Long
+
+    ' User stream - used to read @replies so the bot can respond.
     Private UserStream As IUserStream
+
+    ' Limit of replies per minute, to avoid any possible problems from tweeting too often.
     Private ReplyLimit As Integer
 
     Public Sub New()
@@ -78,6 +92,7 @@ Public Class MovieTitler
         TweetTimer = New Timer()
         AddHandler TweetTimer.Elapsed, AddressOf SendTweet
 
+        ' The rest of the class members are initialized asynchronously, so that the service can start quickly without having to request additional time from Windows.
         InitTask = Task.Run(
             Sub()
                 logger.Debug("Reading text file...")
@@ -86,13 +101,18 @@ Public Class MovieTitler
                 Dim titles As New List(Of String)
                 Dim subtitles As New List(Of String)
                 For Each fullTitle In sourceFileContents
+                    ' If the line has a tab in it, only use text after the tab
                     Dim split1 = fullTitle.Split(vbTab)
                     If split1.Length > 1 Then
-                        fullTitles.Add(split1(1))
-                        Dim index = Math.Max(split1(1).LastIndexOf(" - "), split1(1).LastIndexOf(": "))
+                        fullTitle = split1(1)
+                        fullTitles.Add(fullTitle)
+
+                        ' Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
+                        Dim index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "))
                         If index >= 0 Then
-                            Dim title = split1(1).Substring(0, index)
-                            Dim subtitle = split1(1).Substring(index)
+                            Dim title = fullTitle.Substring(0, index)
+                            Dim subtitle = fullTitle.Substring(index)
+                            ' Don't parse "Mission: Impossible" as a title and subtitle
                             If title IsNot "Mission" Then
                                 titles.Add(title)
                                 subtitles.Add(subtitle)
@@ -109,6 +129,8 @@ Public Class MovieTitler
                 Me.Subtitles = subtitles.Distinct().ToList()
                 logger.Info("Found " & Me.Subtitles.Count & " subtitles")
 
+                ' Credentials are stored in a json file.
+                ' Plain text or xml would have been fine too, but the Twitter integration means we need to include the json parser anyway.
                 logger.Debug("Reading credentials...")
                 Dim jsonObj = JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(File.ReadAllText(ConfigurationManager.AppSettings("KeysFile")))
 
@@ -117,14 +139,12 @@ Public Class MovieTitler
                                          jsonObj("AccessToken"),
                                          jsonObj("AccessTokenSecret"))
 
-                logger.Debug("Getting previous tweets...")
-                PreviousTweets = New List(Of String)
-
                 logger.Debug("Creating user stream...")
                 ReplyLimit = 6
                 UserStream = Tweetinvi.Stream.CreateUserStream(Credentials)
                 AddHandler UserStream.TweetCreatedByAnyoneButMe, AddressOf ReplyHandler
 
+                ' The Start() method may have already run - check whether the periodic tweet timer is running, and make sure the user stream has the same state.
                 If TweetTimer.Enabled Then
                     logger.Debug("Tweet timer is already running - turning on user stream.")
                     UserStream.StartStreamAsync()
@@ -132,8 +152,7 @@ Public Class MovieTitler
                     logger.Debug("Tweet timer is not running - not turning on user stream yet.")
                 End If
 
-                Auth.SetCredentials(Credentials)
-
+                logger.Debug("Finding logged in user...")
                 Dim u As IUserIdentifier = Nothing
                 Auth.ExecuteOperationWithCredentials(Credentials, Sub()
                                                                       u = User.GetAuthenticatedUser()
@@ -144,6 +163,8 @@ Public Class MovieTitler
                                                                       Me.MyId = u.Id
                                                                   End Sub)
 
+                logger.Debug("Getting previous tweets...")
+                PreviousTweets = New List(Of String)
                 Auth.ExecuteOperationWithCredentials(Credentials, Sub()
                                                                       If u Is Nothing Then
                                                                           Return
