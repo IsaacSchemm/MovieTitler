@@ -93,95 +93,105 @@ Public Class MovieTitler
         AddHandler TweetTimer.Elapsed, AddressOf SendTweet
 
         ' The rest of the class members are initialized asynchronously, so that the service can start quickly without having to request additional time from Windows.
-        InitTask = Task.Run(
-            Sub()
-                logger.Debug("Reading text file...")
-                Dim sourceFileContents = File.ReadAllLines(ConfigurationManager.AppSettings("SourceFile"))
-                Dim fullTitles As New List(Of String)
-                Dim titles As New List(Of String)
-                Dim subtitles As New List(Of String)
-                For Each fullTitle In sourceFileContents
-                    ' If the line has a tab in it, only use text after the tab
-                    Dim split1 = fullTitle.Split(vbTab)
-                    If split1.Length > 1 Then
-                        fullTitle = split1(1)
-                        fullTitles.Add(fullTitle)
+        InitTask = Task.Run(AddressOf InitTaskSubroutine)
+    End Sub
 
-                        ' Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
-                        Dim index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "))
-                        If index >= 0 Then
-                            Dim title = fullTitle.Substring(0, index)
-                            Dim subtitle = fullTitle.Substring(index)
-                            ' Don't parse "Mission: Impossible" as a title and subtitle
-                            If title IsNot "Mission" Then
-                                titles.Add(title)
-                                subtitles.Add(subtitle)
-                            End If
-                        End If
+    Private Sub InitTaskSubroutine()
+        logger.Debug("Reading text file...")
+        Dim fileName = ConfigurationManager.AppSettings("SourceFile")
+
+        ' Look in .exe folder first if the SourceFile given is just a filename, not a path
+        If Path.GetFileName(fileName) Is fileName Then
+            Dim location = Path.GetDirectoryName(Reflection.Assembly.GetEntryAssembly().Location)
+            fileName = Path.Combine(location, fileName)
+        End If
+
+        Dim sourceFileContents = File.ReadAllLines(fileName)
+
+        Dim fullTitles As New List(Of String)
+        Dim titles As New List(Of String)
+        Dim subtitles As New List(Of String)
+        For Each fullTitle In sourceFileContents
+            ' If the line has a tab in it, only use text after the tab
+            Dim split1 = fullTitle.Split(vbTab)
+            If split1.Length > 1 Then
+                fullTitle = split1(1)
+                fullTitles.Add(fullTitle)
+
+                ' Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
+                Dim index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "))
+                If index >= 0 Then
+                    Dim title = fullTitle.Substring(0, index)
+                    Dim subtitle = fullTitle.Substring(index)
+                    ' Don't parse "Mission: Impossible" as a title and subtitle
+                    If title IsNot "Mission" Then
+                        titles.Add(title)
+                        subtitles.Add(subtitle)
                     End If
-                Next
-
-                Me.FullTitles = fullTitles
-                logger.Info("Found " & fullTitles.Count & " movies")
-
-                Me.Titles = titles.Distinct().ToList()
-                logger.Info("Found " & Me.Titles.Count & " titles")
-                Me.Subtitles = subtitles.Distinct().ToList()
-                logger.Info("Found " & Me.Subtitles.Count & " subtitles")
-
-                ' Credentials are stored in a json file.
-                ' Plain text or xml would have been fine too, but the Twitter integration means we need to include the json parser anyway.
-                logger.Debug("Reading credentials...")
-                Dim jsonObj = JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(File.ReadAllText(ConfigurationManager.AppSettings("KeysFile")))
-
-                Credentials = New TwitterCredentials(jsonObj("ConsumerKey"),
-                                         jsonObj("ConsumerSecret"),
-                                         jsonObj("AccessToken"),
-                                         jsonObj("AccessTokenSecret"))
-
-                logger.Debug("Creating user stream...")
-                ReplyLimit = 6
-                UserStream = Tweetinvi.Stream.CreateUserStream(Credentials)
-                AddHandler UserStream.TweetCreatedByAnyoneButMe, AddressOf ReplyHandler
-
-                ' The Start() method may have already run - check whether the periodic tweet timer is running, and make sure the user stream has the same state.
-                If TweetTimer.Enabled Then
-                    logger.Debug("Tweet timer is already running - turning on user stream.")
-                    UserStream.StartStreamAsync()
-                Else
-                    logger.Debug("Tweet timer is not running - not turning on user stream yet.")
                 End If
+            End If
+        Next
 
-                logger.Debug("Finding logged in user...")
-                Dim u As IUserIdentifier = Nothing
-                Auth.ExecuteOperationWithCredentials(Credentials, Sub()
-                                                                      u = User.GetAuthenticatedUser()
-                                                                      If u Is Nothing Then
-                                                                          logger.Error(ExceptionHandler.GetLastException())
-                                                                          Return
-                                                                      End If
-                                                                      Me.MyId = u.Id
-                                                                  End Sub)
+        Me.FullTitles = fullTitles
+        logger.Info("Found " & fullTitles.Count & " movies")
 
-                logger.Debug("Getting previous tweets...")
-                PreviousTweets = New List(Of String)
-                Auth.ExecuteOperationWithCredentials(Credentials, Sub()
-                                                                      If u Is Nothing Then
-                                                                          Return
-                                                                      End If
+        Me.Titles = titles.Distinct().ToList()
+        logger.Info("Found " & Me.Titles.Count & " titles")
+        Me.Subtitles = subtitles.Distinct().ToList()
+        logger.Info("Found " & Me.Subtitles.Count & " subtitles")
 
-                                                                      Dim params As New Parameters.UserTimelineParameters
-                                                                      params.ExcludeReplies = True
-                                                                      params.MaximumNumberOfTweetsToRetrieve = 30
-                                                                      Dim tweets = Timeline.GetUserTimeline(u, params)
-                                                                      For Each tweet In tweets
-                                                                          If Not tweet.Text.StartsWith("@") Then
-                                                                              logger.Debug("Found previous tweet: " & tweet.Text)
-                                                                              Me.PreviousTweets.Add(tweet.Text)
-                                                                          End If
-                                                                      Next
-                                                                  End Sub)
-            End Sub)
+        ' Credentials are stored in a json file.
+        ' Plain text or xml would have been fine too, but the Twitter integration means we need to include the json parser anyway.
+        logger.Debug("Reading credentials...")
+        Dim jsonObj = JsonConvert.DeserializeObject(Of Dictionary(Of String, String))(File.ReadAllText(ConfigurationManager.AppSettings("KeysFile")))
+
+        Credentials = New TwitterCredentials(jsonObj("ConsumerKey"),
+                                 jsonObj("ConsumerSecret"),
+                                 jsonObj("AccessToken"),
+                                 jsonObj("AccessTokenSecret"))
+
+        logger.Debug("Creating user stream...")
+        ReplyLimit = 6
+        UserStream = Tweetinvi.Stream.CreateUserStream(Credentials)
+        AddHandler UserStream.TweetCreatedByAnyoneButMe, AddressOf ReplyHandler
+
+        ' The Start() method may have already run - check whether the periodic tweet timer is running, and make sure the user stream has the same state.
+        If TweetTimer.Enabled Then
+            logger.Debug("Tweet timer is already running - turning on user stream.")
+            UserStream.StartStreamAsync()
+        Else
+            logger.Debug("Tweet timer is not running - not turning on user stream yet.")
+        End If
+
+        logger.Debug("Finding logged in user...")
+        Dim u As IUserIdentifier = Nothing
+        Auth.ExecuteOperationWithCredentials(Credentials, Sub()
+                                                              u = User.GetAuthenticatedUser()
+                                                              If u Is Nothing Then
+                                                                  logger.Error(ExceptionHandler.GetLastException())
+                                                                  Return
+                                                              End If
+                                                              Me.MyId = u.Id
+                                                          End Sub)
+
+        logger.Debug("Getting previous tweets...")
+        PreviousTweets = New List(Of String)
+        Auth.ExecuteOperationWithCredentials(Credentials, Sub()
+                                                              If u Is Nothing Then
+                                                                  Return
+                                                              End If
+
+                                                              Dim params As New Parameters.UserTimelineParameters
+                                                              params.ExcludeReplies = True
+                                                              params.MaximumNumberOfTweetsToRetrieve = 30
+                                                              Dim tweets = Timeline.GetUserTimeline(u, params)
+                                                              For Each tweet In tweets
+                                                                  If Not tweet.Text.StartsWith("@") Then
+                                                                      logger.Debug("Found previous tweet: " & tweet.Text)
+                                                                      Me.PreviousTweets.Add(tweet.Text)
+                                                                  End If
+                                                              Next
+                                                          End Sub)
     End Sub
 
     Private Sub ReplyHandler(sender As Object, args As TweetReceivedEventArgs)
@@ -263,6 +273,7 @@ Public Class MovieTitler
     End Sub
 
     Public Sub ServiceStart()
+        logger.Info("Service starting")
         Dim startTime = ConfigurationManager.AppSettings("StartTime")
         If startTime IsNot Nothing Then
             Dim startAt = Date.Today + TimeSpan.Parse(ConfigurationManager.AppSettings("StartTime"))
@@ -282,6 +293,7 @@ Public Class MovieTitler
     End Sub
 
     Public Sub ServiceStop()
+        logger.Info("Service stopping")
         TweetTimer.Stop()
 
         If UserStream IsNot Nothing Then
