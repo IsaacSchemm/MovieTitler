@@ -69,8 +69,9 @@ Public Class MovieTitler
     Private Titles As IReadOnlyList(Of String)
     Private Subtitles As IReadOnlyList(Of String)
 
-    ' The 30 most recent tweets made by this account that were not replies. Used to avoid reusing a title/subtitle in a short amount of time.
+    ' The most recent tweets made by this account that were not replies. Used to avoid reusing a title/subtitle in a short amount of time.
     Private PreviousTweets As List(Of String)
+    Private PreviousTweetsToKeep As Integer
 
     ' Twitter credentials, read from KeysFile.
     Private Credentials As ITwitterCredentials
@@ -140,6 +141,9 @@ Public Class MovieTitler
         Me.Subtitles = subtitles.Distinct().ToList()
         logger.Info("Found " & Me.Subtitles.Count & " subtitles")
 
+        PreviousTweetsToKeep = Math.Min(Me.Titles.Count, Me.Subtitles.Count) / 2
+        logger.Info("Will remember up to " & PreviousTweetsToKeep & " previous tweets (will try to avoid reusing parts of titles in that range)")
+
         ' Credentials are stored in a json file.
         ' Plain text or xml would have been fine too, but the Twitter integration means we need to include the json parser anyway.
         logger.Debug("Reading credentials...")
@@ -183,7 +187,7 @@ Public Class MovieTitler
 
                                                               Dim params As New Parameters.UserTimelineParameters
                                                               params.ExcludeReplies = True
-                                                              params.MaximumNumberOfTweetsToRetrieve = 30
+                                                              params.MaximumNumberOfTweetsToRetrieve = PreviousTweetsToKeep
                                                               Dim tweets = Timeline.GetUserTimeline(u, params)
                                                               For Each tweet In tweets
                                                                   If Not tweet.Text.StartsWith("@") Then
@@ -211,13 +215,13 @@ Public Class MovieTitler
                     Dim movies = Me.FullTitles.Where(Function(s) s.IndexOf(segment, StringComparison.InvariantCultureIgnoreCase) >= 0).OrderBy(Function(s) R.Next())
                     Dim text = "@" & args.Tweet.CreatedBy.ScreenName & " Sorry, I don't know any movies that have that in the title."
                     If (movies.Any()) Then
-                        text = "@" & args.Tweet.CreatedBy.ScreenName & " I found these movies: " & String.Join("; ", movies)
+                        text = "@" & args.Tweet.CreatedBy.ScreenName & " I found: " & String.Join("; ", movies)
                         If text.Length > 140 Then
                             text = text.Substring(0, 139) + ChrW(8230)
                         End If
                     End If
                     logger.Info(Date.Now & ": " & text)
-                    Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(text))
+                    ''''Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(text))
                 End If
             End If
         Catch ex As Exception
@@ -244,15 +248,19 @@ Public Class MovieTitler
                 newTitle = part1 & part2
 
                 If FullTitles.Contains(newTitle) Then
+                    ' This is a real movie, so don't tweet it.
                     Continue Do
                 End If
 
                 If i >= 50 Then
+                    ' Tried 50 combinations and they all result in reuse of part of a title - give up and use it anyway.
                     Exit Do
                 End If
 
                 Dim similar = PreviousTweets.Where(Function(s) s.StartsWith(part1) Or s.EndsWith(part2))
                 If similar.Any() Then
+                    ' Either the title or subtitle was used in a recent tweet - try generating a new title.
+                    logger.Info("Skipping generated title: " & newTitle)
                     newTitle = Nothing
                 End If
 
@@ -262,10 +270,10 @@ Public Class MovieTitler
             If newTitle IsNot Nothing Then
                 logger.Info(Date.Now & ": " & newTitle)
                 PreviousTweets.Add(newTitle)
-                If PreviousTweets.Count > 30 Then
+                If PreviousTweets.Count > PreviousTweetsToKeep Then
                     PreviousTweets.RemoveAt(0)
                 End If
-                Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
+                ''''Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
             End If
         Catch ex As Exception
             logger.Error(ex)
