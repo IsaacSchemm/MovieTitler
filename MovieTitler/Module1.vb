@@ -125,7 +125,7 @@ Public Class MovieTitler
                     Dim title = fullTitle.Substring(0, index)
                     Dim subtitle = fullTitle.Substring(index)
                     ' Don't parse "Mission: Impossible" as a title and subtitle
-                    If title IsNot "Mission" Then
+                    If title <> "Mission" Then
                         titles.Add(title)
                         subtitles.Add(subtitle)
                     End If
