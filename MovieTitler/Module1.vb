@@ -221,7 +221,7 @@ Public Class MovieTitler
                         End If
                     End If
                     logger.Info(Date.Now & ": " & text)
-                    ''''Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(text))
+                    Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(text))
                 End If
             End If
         Catch ex As Exception
@@ -273,7 +273,7 @@ Public Class MovieTitler
                 If PreviousTweets.Count > PreviousTweetsToKeep Then
                     PreviousTweets.RemoveAt(0)
                 End If
-                ''''Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
+                Auth.ExecuteOperationWithCredentials(Credentials, Sub() Tweet.PublishTweet(newTitle))
             End If
         Catch ex As Exception
             logger.Error(ex)
