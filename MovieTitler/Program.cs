@@ -106,43 +106,49 @@ public class MovieTitler {
 
     private void InitTaskSubroutine() {
         logger.Debug("Reading text file...");
-        string fileName = ConfigurationManager.AppSettings["SourceFile"];
+        string[] fileNames = ConfigurationManager.AppSettings["SourceFile"].Split(',');
 
         // Look in .exe folder first if the SourceFile given is just a filename, not a path
-        if (Path.GetFileName(fileName) == fileName) {
-            string location = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            fileName = Path.Combine(location, fileName);
+        for (int i = 0; i < fileNames.Length; i++) {
+            if (Path.GetFileName(fileNames[i]) == fileNames[i]) {
+                string location = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                fileNames[i] = Path.Combine(location, fileNames[i]);
+            }
         }
-
-        string[] sourceFileContents = File.ReadAllLines(fileName);
 
         List<string> fullTitles = new List<string>();
         List<string> titles = new List<string>();
         List<string> subtitles = new List<string>();
-        foreach (var line in sourceFileContents) {
-            // If the line has a tab in it, only use text after the tab
-            string[] split1 = line.Split('\t');
-            if (split1.Length > 1) {
-                string fullTitle = split1[1];
-                fullTitles.Add(fullTitle);
 
-                if (!fullTitle.Any(c => c == ':' || c == '-')) continue;
+        foreach (string fileName in fileNames) {
+            string[] sourceFileContents = File.ReadAllLines(fileName);
 
-                if (PARTX.IsMatch(fullTitle)) {
-                    string newTitle = PARTX.Replace(fullTitle, "");
-                    logger.Info($"Changing title {fullTitle} to {newTitle}");
-                    fullTitle = newTitle;
-                }
-                
-                // Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
-                int index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "));
-                if (index >= 0) {
-                    string title = fullTitle.Substring(0, index);
-                    string subtitle = fullTitle.Substring(index);
-                    // Don't parse "Mission: Impossible" as a title and subtitle
-                    if (title != "Mission") {
-                        titles.Add(title);
-                        subtitles.Add(subtitle);
+            foreach (var line in sourceFileContents) {
+                // If the line has a tab in it, only use text after the tab
+                string[] split1 = line.Split('\t');
+                if (split1.Length > 1) {
+                    string fullTitle = split1[1];
+                    if (fullTitles.Contains(fullTitle)) continue;
+                    fullTitles.Add(fullTitle);
+
+                    if (!fullTitle.Any(c => c == ':' || c == '-')) continue;
+
+                    if (PARTX.IsMatch(fullTitle)) {
+                        string newTitle = PARTX.Replace(fullTitle, "");
+                        logger.Info($"Changing title {fullTitle} to {newTitle}");
+                        fullTitle = newTitle;
+                    }
+
+                    // Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
+                    int index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "));
+                    if (index >= 0) {
+                        string title = fullTitle.Substring(0, index);
+                        string subtitle = fullTitle.Substring(index);
+                        // Don't parse "Mission: Impossible" as a title and subtitle
+                        if (title != "Mission") {
+                            titles.Add(title);
+                            subtitles.Add(subtitle);
+                        }
                     }
                 }
             }
