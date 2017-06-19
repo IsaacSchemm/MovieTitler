@@ -18,6 +18,7 @@ using Tweetinvi.Streaming;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 public static class Program {
 
@@ -63,6 +64,7 @@ public class MovieTitler {
     private static Logger logger = LogManager.GetCurrentClassLogger();
 
     private static Random R = new Random();
+    private static Regex PARTX = new Regex("( -)? Part ([XVI]+|[1-9]+)$");
 
     // This task is launched when the class is initialized, and it creates everything below except TweetTimer.
     private Task InitTask;
@@ -124,6 +126,14 @@ public class MovieTitler {
                 string fullTitle = split1[1];
                 fullTitles.Add(fullTitle);
 
+                if (!fullTitle.Any(c => c == ':' || c == '-')) continue;
+
+                if (PARTX.IsMatch(fullTitle)) {
+                    string newTitle = PARTX.Replace(fullTitle, "");
+                    logger.Info($"Changing title {fullTitle} to {newTitle}");
+                    fullTitle = newTitle;
+                }
+                
                 // Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
                 int index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "));
                 if (index >= 0) {
