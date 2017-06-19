@@ -106,12 +106,12 @@
 2015	Minions
 2015	The Hunger Games: Mockingjay - Part 2
 2015	The Martian
-2015	Cinderella (2015)
+2015	Cinderella
 2015	Spectre
 2015	Mission: Impossible - Rogue Nation
 2015	Pitch Perfect 2
 2015	Ant-Man
-2015	Home (2015)
+2015	Home
 2015	Hotel Transylvania 2
 2015	Fifty Shades of Grey
 2015	The SpongeBob Movie: Sponge Out of Water
@@ -145,21 +145,21 @@
 2015	Vacation
 2015	The Perfect Guy
 2015	Fantastic Four
-2015	Focus (2015)
+2015	Focus
 2015	Southpaw
 2015	Insidious Chapter 3
 2015	Daddy's Home
 2015	Alvin and the Chipmunks The Road Chip
-2015	Poltergeist (2015)
+2015	Poltergeist
 2015	Jupiter Ascending
 2015	Sicario
 2015	The Man From U.N.C.L.E.
 2015	McFarland, USA
-2015	The Gift (2015)
+2015	The Gift
 2015	Sisters
-2015	Everest (2015)
+2015	Everest
 2015	The Night Before
-2015	Max (2015)
+2015	Max
 2015	The Age of Adaline
 2015	Krampus
 2015	The Longest Ride
@@ -192,7 +192,7 @@
 2015	Project Almanac
 2015	Black or White
 2015	Aloha
-2015	The Secret in their Eyes (2015)
+2015	The Secret in their Eyes
 2015	The Big Short
 2015	Shaun the Sheep Movie
 2015	Brooklyn
@@ -210,9 +210,9 @@
 2014	Big Hero 6
 2014	Dawn of the Planet of the Apes
 2014	The Amazing Spider-Man 2
-2014	Godzilla (2014)
+2014	Godzilla
 2014	22 Jump Street
-2014	Teenage Mutant Ninja Turtles (2014)
+2014	Teenage Mutant Ninja Turtles
 2014	Interstellar
 2014	How to Train Your Dragon 2
 2014	Gone Girl
@@ -235,15 +235,15 @@
 2014	Heaven is for Real
 2014	The Imitation Game
 2014	Dumb and Dumber To
-2014	Annie (2014)
-2014	Fury (2014)
+2014	Annie
+2014	Fury
 2014	Tammy
 2014	Annabelle
-2014	The Other Woman (2014)
+2014	The Other Woman
 2014	Penguins of Madagascar
 2014	Let's Be Cops
 2014	The Monuments Men
-2014	Hercules (2014)
+2014	Hercules
 2014	The Purge: Anarchy
 2014	Alexander and the Terrible, Horrible, No Good, Very Bad Day
 2014	Think Like a Man Too
@@ -253,19 +253,19 @@
 2014	Son of God
 2014	Planes: Fire & Rescue
 2014	The Grand Budapest Hotel
-2014	RoboCop (2014)
+2014	RoboCop
 2014	Dracula Untold
 2014	Horrible Bosses 2
 2014	The Hundred-Foot Journey
-2014	No Good Deed (2014)
+2014	No Good Deed
 2014	Selma
 2014	Muppets Most Wanted
 2014	Ouija
 2014	The Boxtrolls
 2014	Jack Ryan: Shadow Recruit
 2014	If I Stay
-2014	The Book of Life (2014)
-2014	About Last Night (2014)
+2014	The Book of Life
+2014	About Last Night
 2014	Into The Storm
 2014	The Judge
 2014	Jersey Boys
@@ -280,7 +280,7 @@
 2014	The Expendables 3
 2014	Earth to Echo
 2014	Sex Tape
-2014	Wild (2014)
+2014	Wild
 2014	Million Dollar Arm
 2014	The Theory of Everything
 2014	This is Where I Leave You
@@ -315,7 +315,7 @@
 2013	The Heat
 2013	We're the Millers
 2013	American Hustle
-2013	The Great Gatsby (2013)
+2013	The Great Gatsby
 2013	The Conjuring
 2013	Identity Thief
 2013	Grown Ups 2
@@ -362,7 +362,7 @@
 2013	12 Years a Slave
 2013	Free Birds
 2013	Hansel and Gretel: Witch Hunters
-2013	Evil Dead (2013)
+2013	Evil Dead
 2013	Red 2
 2013	Tyler Perry's A Madea Christmas
 2013	Tyler Perry's Temptation: Confessions of a Marriage Counselor
@@ -378,14 +378,14 @@
 2013	47 Ronin
 2013	August: Osage County
 2013	Philomena
-2013	The Family (2013)
+2013	The Family
 2013	Walking with Dinosaurs
-2013	Carrie (2013)
+2013	Carrie
 2013	Texas Chainsaw 3D
 2013	R.I.P.D.
 2013	Blue Jasmine
 2013	Kevin Hart: Let Me Explain
-2013	Side Effects (2013)
+2013	Side Effects
 2013	Scary Movie 5
 2013	The Mortal Instruments: City of Bones
 2013	Delivery Man
@@ -393,11 +393,11 @@
 2013	One Direction: This is Us
 2013	Kick-Ass 2
 2013	Dallas Buyers Club
-2013	Rush (2013)
-2013	The Host (2013)
+2013	Rush
+2013	The Host
 2013	The World's End
 2013	21 and Over
-2013	Her (2013)
+2013	Her
 2012	Marvel's The Avengers
 2012	The Dark Knight Rises
 2012	The Hunger Games
@@ -415,7 +415,7 @@
 2012	Django Unchained
 2012	Ice Age: Continental Drift
 2012	Snow White and the Huntsman
-2012	Les Miserables (2012)
+2012	Les Miserables
 2012	Hotel Transylvania
 2012	Taken 2
 2012	21 Jump Street
@@ -447,12 +447,12 @@
 2012	Battleship
 2012	Pitch Perfect
 2012	Mirror Mirror
-2012	Chronicle (2012)
+2012	Chronicle
 2012	Hope Springs
 2012	Underworld Awakening
 2012	The Lucky One
 2012	The Dictator
-2012	Total Recall (2012)
+2012	Total Recall
 2012	Titanic 3D
 2012	American Reunion
 2012	ParaNorman
@@ -469,11 +469,11 @@
 2012	Diary of a Wimpy Kid: Dog Days
 2012	Sinister
 2012	Beauty and the Beast (3D)
-2012	Savages (2012)
+2012	Savages
 2012	The Best Exotic Marigold Hotel
 2012	Moonrise Kingdom
 2012	Here Comes the Boom
-2012	Red Dawn (2012)
+2012	Red Dawn
 2012	The Three Stooges
 2012	Star Wars: Episode I - The Phantom Menace (in 3D)
 2012	Resident Evil: Retribution
@@ -525,7 +525,7 @@
 2011	Hop
 2011	Paranormal Activity 3
 2011	Just Go With It
-2011	The Girl with the Dragon Tattoo (2011)
+2011	The Girl with the Dragon Tattoo
 2011	Bad Teacher
 2011	Cowboys & Aliens
 2011	Gnomeo and Juliet
@@ -564,7 +564,7 @@
 2011	Insidious
 2011	Tyler Perry's Madea's Big Happy Family
 2011	Diary of a Wimpy Kid: Rodrick Rules
-2011	Footloose (2011)
+2011	Footloose
 2011	The Dilemma
 2011	Arthur Christmas
 2011	Hall Pass
@@ -589,17 +589,17 @@
 2011	Sucker Punch
 2011	Larry Crowne
 2011	A Very Harold & Kumar 3D Christmas
-2011	Drive (2011)
+2011	Drive
 2011	50/50
 2011	Courageous
 2011	The Rite
-2011	Arthur (2011)
+2011	Arthur
 2011	Extremely Loud & Incredibly Close
 2011	The Debt
 2011	The Sitter
 2011	The Iron Lady
 2010	Toy Story 3
-2010	Alice in Wonderland (2010)
+2010	Alice in Wonderland
 2010	Iron Man 2
 2010	The Twilight Saga: Eclipse
 2010	Harry Potter and the Deathly Hallows Part 1
@@ -611,7 +611,7 @@
 2010	The Karate Kid
 2010	Tron Legacy
 2010	True Grit
-2010	Clash of the Titans (2010)
+2010	Clash of the Titans
 2010	Grown Ups
 2010	Little Fockers
 2010	Megamind
@@ -648,7 +648,7 @@
 2010	The Bounty Hunter
 2010	Diary of a Wimpy Kid
 2010	The Sorcerer's Apprentice
-2010	A Nightmare on Elm Street (2010)
+2010	A Nightmare on Elm Street
 2010	The Last Song
 2010	The Wolfman
 2010	Get Him to the Greek
@@ -672,10 +672,10 @@
 2010	Cats & Dogs: The Revenge of Kitty Galore
 2010	Edge of Darkness
 2010	Gulliver's Travels
-2010	Death at a Funeral (2010)
+2010	Death at a Funeral
 2010	Step Up 3-D
 2010	The Last Exorcism
-2010	Legion (2010)
+2010	Legion
 2010	Burlesque
 2010	The Crazies
 2010	For Colored Girls
@@ -718,7 +718,7 @@
 2009	G.I. Joe: The Rise of Cobra
 2009	Paul Blart: Mall Cop
 2009	Taken
-2009	A Christmas Carol (2009)
+2009	A Christmas Carol
 2009	Angels & Demons
 2009	Terminator Salvation
 2009	Cloudy with a Chance of Meatballs
@@ -749,7 +749,7 @@
 2009	Race to Witch Mountain
 2009	The Final Destination
 2009	The Taking of Pelham 1 2 3
-2009	Friday the 13th (2009)
+2009	Friday the 13th
 2009	17 Again
 2009	The Time Traveler's Wife
 2009	Bruno
@@ -767,7 +767,7 @@
 2009	Confessions of a Shopaholic
 2009	The Lovely Bones
 2009	Year One
-2009	The Unborn (2009)
+2009	The Unborn
 2009	Planet 51
 2009	Drag Me to Hell
 2009	Orphan
@@ -777,22 +777,22 @@
 2009	Ninja Assassin
 2009	Invictus
 2009	State of Play
-2009	Notorious (2009)
+2009	Notorious
 2009	The Pink Panther 2
 2009	Under the Sea 3D
 2009	All About Steve
-2009	Halloween II (2009)
+2009	Halloween II
 2009	The Informant!
-2009	The Last House on the Left (2009)
+2009	The Last House on the Left
 2009	The Men Who Stare at Goats
 2009	(500) Days of Summer
-2009	Earth (2009)
+2009	Earth
 2009	Push
 2009	9
 2009	The Soloist
 2009	Toy Story / Toy Story 2 (3D)
 2009	Did You Hear About the Morgans?
-2009	The Stepfather (2009)
+2009	The Stepfather
 2009	The Uninvited
 2009	Brothers
 2009	Saw VI
@@ -837,7 +837,7 @@
 2008	What Happens in Vegas
 2008	Jumper
 2008	Cloverfield
-2008	The Day the Earth Stood Still (2008)
+2008	The Day the Earth Stood Still
 2008	27 Dresses
 2008	Hellboy II: The Golden Army
 2008	Vantage Point
@@ -862,7 +862,7 @@
 2008	College Road Trip
 2008	The Sisterhood of the Traveling Pants 2
 2008	Speed Racer
-2008	Prom Night (2008)
+2008	Prom Night
 2008	Rambo
 2008	Welcome Home Roscoe Jenkins
 2008	Tyler Perry's Meet the Browns
@@ -921,7 +921,7 @@
 2007	Bee Movie
 2007	Superbad
 2007	I Now Pronounce You Chuck and Larry
-2007	Hairspray (2007)
+2007	Hairspray
 2007	Blades of Glory
 2007	Ocean's Thirteen
 2007	Ghost Rider
@@ -941,11 +941,11 @@
 2007	Saw IV
 2007	Stomp the Yard
 2007	Surf's Up
-2007	Halloween (2007)
+2007	Halloween
 2007	Tyler Perry's Why Did I Get Married?
 2007	TMNT
 2007	P.S. I Love You
-2007	3:10 to Yuma (2007)
+2007	3:10 to Yuma
 2007	Sweeney Todd: The Demon Barber of Fleet Street
 2007	Atonement
 2007	Resident Evil: Extinction
@@ -1022,8 +1022,8 @@
 2006	Inside Man
 2006	Open Season
 2006	The Santa Clause 3: The Escape Clause
-2006	Charlotte's Web (2006)
-2006	The Pink Panther (2006)
+2006	Charlotte's Web
+2006	The Pink Panther
 2006	Eight Below
 2006	Saw III
 2006	Nacho Libre
@@ -1056,7 +1056,7 @@
 2006	Blood Diamond
 2006	The Queen
 2006	The Guardian
-2006	The Omen (2006)
+2006	The Omen
 2006	Final Destination 3
 2006	The Prestige
 2006	The Lake House
@@ -1110,7 +1110,7 @@
 2005	Mr. & Mrs. Smith
 2005	Hitch
 2005	The Longest Yard
-2005	Fantastic Four (2005)
+2005	Fantastic Four
 2005	Chicken Little
 2005	Robots
 2005	Walk the Line
@@ -1135,7 +1135,7 @@
 2005	Sahara
 2005	Coach Carter
 2005	Herbie: Fully Loaded
-2005	The Amityville Horror (2005)
+2005	The Amityville Horror
 2005	Sky High
 2005	Bewitched
 2005	Jarhead
@@ -1189,7 +1189,7 @@
 2005	Good Night, and Good Luck.
 2005	A History of Violence
 2005	Get Rich or Die Tryin'
-2005	The Fog (2005)
+2005	The Fog
 2005	Zathura
 2005	Rent
 2005	Capote
@@ -1507,7 +1507,7 @@
 2001	Pearl Harbor
 2001	Ocean's Eleven
 2001	Jurassic Park III
-2001	Planet of the Apes (2001)
+2001	Planet of the Apes
 2001	A Beautiful Mind
 2001	Hannibal
 2001	American Pie 2
@@ -1662,7 +1662,7 @@
 2000	Little Nicky
 2000	Pitch Black
 2000	The Original Kings of Comedy
-2000	Bedazzled (2000)
+2000	Bedazzled
 2000	Autumn in New York
 2000	28 Days
 2000	Keeping the Faith
@@ -1874,7 +1874,7 @@
 1998	Can't Hardly Wait
 1998	Fallen
 1998	Waking Ned Devine
-1998	The Avengers (1998)
+1998	The Avengers
 1998	One True Thing
 1998	The Players Club
 1998	Rounders
@@ -1882,7 +1882,7 @@
 1998	The Borrowers
 1998	Quest for Camelot
 1998	He Got Game
-1998	Psycho (1998)
+1998	Psycho
 1998	John Carpenter's Vampires
 1998	Mafia!
 1998	Hard Rain
@@ -1942,7 +1942,7 @@
 1997	G.I. Jane
 1997	Alien Resurrection
 1997	The Full Monty
-1997	The Rainmaker (1997)
+1997	The Rainmaker
 1997	Return of the Jedi (Special Edition)
 1997	Bean
 1997	Cop Land
@@ -2003,9 +2003,9 @@
 1996	Mission: Impossible
 1996	Jerry Maguire
 1996	Ransom
-1996	101 Dalmatians (1996)
+1996	101 Dalmatians
 1996	The Rock
-1996	The Nutty Professor (1996)
+1996	The Nutty Professor
 1996	The Birdcage
 1996	A Time to Kill
 1996	The First Wives Club
@@ -2017,7 +2017,7 @@
 1996	Star Trek: First Contact
 1996	Space Jam
 1996	The English Patient
-1996	Broken Arrow (1996)
+1996	Broken Arrow
 1996	Beavis and Butt-Head Do America
 1996	Jingle All the Way
 1996	The Cable Guy
@@ -2083,7 +2083,7 @@
 1996	The People Vs. Larry Flynt
 1996	Don't Be a Menace to South Central While Drinking Your Juice in the Hood
 1996	Flipper
-1996	Mother (1996)
+1996	Mother
 1996	Bed of Roses
 1996	Kazaam
 1996	The Fan
@@ -2092,7 +2092,7 @@
 1996	Extreme Measures
 1996	The Phantom
 1996	Fled
-1996	Diabolique (1996)
+1996	Diabolique
 1996	The Frighteners
 1996	Trainspotting
 1996	Supercop
@@ -2223,14 +2223,14 @@
 1994	The Naked Gun 33 1/3: The Final Insult
 1994	The Crow
 1994	Natural Born Killers
-1994	Angels in the Outfield (1994)
-1994	Little Women (1994)
+1994	Angels in the Outfield
+1994	Little Women
 1994	When a Man Loves a Woman
 1994	The River Wild
 1994	D2: The Mighty Ducks
 1994	Timecop
 1994	City Slickers II: The Legend of Curly's Gold
-1994	The Jungle Book (1994)
+1994	The Jungle Book
 1994	Beverly Hills Cop III
 1994	Nobody's Fool
 1994	The Paper
@@ -2278,7 +2278,7 @@
 1994	Milk Money
 1994	Wes Craven's New Nightmare
 1994	My Girl 2
-1994	Miracle on 34th Street (1994)
+1994	Miracle on 34th Street
 1994	The War
 1994	Baby's Day Out
 1994	Lightning Jack
@@ -2287,7 +2287,7 @@
 1994	Terminal Velocity
 1994	Monkey Trouble
 1994	Above the Rim
-1994	The Getaway (1994)
+1994	The Getaway
 1994	No Escape
 1994	Bad Girls
 1994	The Madness of King George
@@ -2318,7 +2318,7 @@
 1993	Demolition Man
 1993	Sister Act 2: Back in the Habit
 1993	Tombstone
-1993	The Three Musketeers (1993)
+1993	The Three Musketeers
 1993	Rookie of the Year
 1993	Beethoven's 2nd
 1993	Dennis the Menace
@@ -2333,7 +2333,7 @@
 1993	The Beverly Hillbillies
 1993	Teenage Mutant Ninja Turtles III
 1993	Homeward Bound: The Incredible Journey
-1993	Snow White and the Seven Dwarfs (Re-issue) (1993)
+1993	Snow White and the Seven Dwarfs (Re-issue)
 1993	Falling Down
 1993	The Piano
 1993	Hocus Pocus
@@ -2464,7 +2464,7 @@
 1992	Juice
 1992	Prelude to a Kiss
 1992	Hero
-1992	Pinocchio (Re-issue) (1992)
+1992	Pinocchio (Re-issue)
 1992	Singles
 1992	Used People
 1992	The Babe
@@ -2494,7 +2494,7 @@
 1992	Glengarry Glen Ross
 1992	Husbands and Wives
 1992	Chaplin
-1992	Gladiator (1992)
+1992	Gladiator
 1992	White Sands
 1992	Once Upon a Crime
 1992	Bebe's Kids
@@ -2517,7 +2517,7 @@
 1991	JFK
 1991	Hot Shots!
 1991	What About Bob?
-1991	101 Dalmatians (Re-issue) (1991)
+1991	101 Dalmatians (Re-issue)
 1991	The Last Boy Scout
 1991	My Girl
 1991	Boyz N the Hood
@@ -2555,7 +2555,7 @@
 1991	The People Under the Stairs
 1991	Lionheart
 1991	Oscar
-1991	Frankie and Johnny (1991)
+1991	Frankie and Johnny
 1991	Pure Luck
 1991	An American Tail: Fievel Goes West
 1991	Only the Lonely
@@ -2564,7 +2564,7 @@
 1991	Mobsters
 1991	House Party 2
 1991	Mortal Thoughts
-1991	Paradise (1991)
+1991	Paradise
 1991	For the Boys
 1991	The Neverending Story II
 1991	Hudson Hawk
@@ -2626,7 +2626,7 @@
 1990	Goodfellas
 1990	Marked for Death
 1990	Robocop 2
-1990	The Jungle Book (re-issue) (1990)
+1990	The Jungle Book (re-issue)
 1990	Young Guns II
 1990	Gremlins 2: The New Batch
 1990	Rocky V
@@ -2646,19 +2646,19 @@
 1990	House Party
 1990	Jacob's Ladder
 1990	The Exorcist III
-1990	Fantasia (Re-issue) (1990)
+1990	Fantasia (Re-issue)
 1990	Navy Seals
 1990	Ernest Goes to Jail
 1990	Ghost Dad
 1990	My Blue Heaven
 1990	The Russia House
 1990	The First Power
-1990	The Rookie (1990)
+1990	The Rookie
 1990	The Freshman
 1990	The Adventures of Ford Fairlane
 1990	Quigley Down Under
 1990	Madhouse
-1990	Hamlet (1990)
+1990	Hamlet
 1990	Jetsons: The Movie
 1990	Stella
 1990	Taking Care of Business
@@ -2666,7 +2666,7 @@
 1990	Duck Tales: The Movie
 1990	Sibling Rivalry
 1990	White Palace
-1990	The Guardian (1990)
+1990	The Guardian
 1990	Death Warrant
 1990	Tremors
 1990	Tales From the Darkside: The Movie
@@ -2738,7 +2738,7 @@
 1989	The Bear
 1989	Weekend at Bernie's
 1989	Road House
-1989	Peter Pan (Re-issue) (1989)
+1989	Peter Pan (Re-issue)
 1989	The Dream Team
 1989	Do the Right Thing
 1989	All Dogs Go to Heaven
@@ -2748,7 +2748,7 @@
 1989	Dad
 1989	Lock Up
 1989	Cousins
-1989	The Rescuers (Re-issue) (1989)
+1989	The Rescuers (Re-issue)
 1989	Say Anything
 1989	An Innocent Man
 1989	The Fly II
@@ -2797,7 +2797,7 @@
 1989	Enemies, A Love Story
 1989	Disorganized Crime
 1989	Johnny Handsome
-1989	Lawrence of Arabia (re-issue) (1989)
+1989	Lawrence of Arabia (re-issue)
 1988	Rain Man
 1988	Who Framed Roger Rabbit
 1988	Coming to America
@@ -2825,7 +2825,7 @@
 1988	The Great Outdoors
 1988	Tequila Sunrise
 1988	Big Business
-1988	Bambi (Re-issue) (1988)
+1988	Bambi (Re-issue)
 1988	Midnight Run
 1988	The Dead Pool
 1988	Red Heat
@@ -2919,7 +2919,7 @@
 1987	The Living Daylights
 1987	Eddie Murphy Raw
 1987	Planes, Trains and Automobiles
-1987	Snow White and the Seven Dwarfs (Re-issue) (1987)
+1987	Snow White and the Seven Dwarfs (Re-issue)
 1987	Full Metal Jacket
 1987	A Nightmare on Elm Street 3: Dream Warriors
 1987	The Last Emperor
@@ -2933,7 +2933,7 @@
 1987	No Way Out
 1987	Like Father, Like Son
 1987	Adventures in Babysitting
-1987	Cinderella (1987 re-issue)
+1987	Cinderella (re-issue)
 1987	* batteries not included
 1987	The Lost Boys
 1987	Can't Buy Me Love
@@ -2958,9 +2958,9 @@
 1987	Suspect
 1987	The Believers
 1987	Some Kind of Wonderful
-1987	Project X (1987)
+1987	Project X
 1987	The Big Easy
-1987	The Aristocats (Re-issue) (1987)
+1987	The Aristocats (Re-issue)
 1987	Born in East L.A.
 1987	Masters of the Universe
 1987	Angel Heart

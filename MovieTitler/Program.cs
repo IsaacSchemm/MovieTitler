@@ -131,24 +131,25 @@ public class MovieTitler {
                     if (fullTitles.Contains(fullTitle)) continue;
                     fullTitles.Add(fullTitle);
 
-                    if (!fullTitle.Any(c => c == ':' || c == '-')) continue;
-
                     if (PARTX.IsMatch(fullTitle)) {
                         string newTitle = PARTX.Replace(fullTitle, "");
-                        logger.Info($"Changing title {fullTitle} to {newTitle}");
                         fullTitle = newTitle;
                     }
 
                     // Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
-                    int index = Math.Max(fullTitle.LastIndexOf(" - "), fullTitle.LastIndexOf(": "));
+                    int index = Math.Max(Math.Max(fullTitle.LastIndexOf(" ("), fullTitle.LastIndexOf(": ")), fullTitle.LastIndexOf(": "));
                     if (index >= 0) {
                         string title = fullTitle.Substring(0, index);
                         string subtitle = fullTitle.Substring(index);
+
                         // Don't parse "Mission: Impossible" as a title and subtitle
-                        if (title != "Mission") {
-                            titles.Add(title);
-                            subtitles.Add(subtitle);
+                        if (title == "Mission") continue;
+                        // Skip some common parentheticals that aren't part of the title
+                        if (new string[] { "3d", "imax", "re-issue" }.Any(s => subtitle.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) > -1)) {
+                            continue;
                         }
+                        titles.Add(title);
+                        subtitles.Add(subtitle);
                     }
                 }
             }
