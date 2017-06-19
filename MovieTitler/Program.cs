@@ -65,6 +65,7 @@ public class MovieTitler {
 
     private static Random R = new Random();
     private static Regex PARTX = new Regex("( -)? Part ([XVI]+|[1-9]+)$");
+    private static Regex IGNORED_SUBTITLE_COMPONENTS = new Regex("(3d|re-issue|imax)", RegexOptions.IgnoreCase);
 
     // This task is launched when the class is initialized, and it creates everything below except TweetTimer.
     private Task InitTask;
@@ -137,7 +138,11 @@ public class MovieTitler {
                     }
 
                     // Get title/subtitle (if applicable) - look for last occurence of colon+space or space+dash+space
-                    int index = Math.Max(Math.Max(fullTitle.LastIndexOf(" ("), fullTitle.LastIndexOf(": ")), fullTitle.LastIndexOf(": "));
+                    int index = new[] {
+                        fullTitle.LastIndexOf(" ("),
+                        fullTitle.LastIndexOf(" - "),
+                        fullTitle.LastIndexOf(": ")
+                    }.Max();
                     if (index >= 0) {
                         string title = fullTitle.Substring(0, index);
                         string subtitle = fullTitle.Substring(index);
@@ -145,7 +150,7 @@ public class MovieTitler {
                         // Don't parse "Mission: Impossible" as a title and subtitle
                         if (title == "Mission") continue;
                         // Skip some common parentheticals that aren't part of the title
-                        if (new string[] { "3d", "imax", "re-issue" }.Any(s => subtitle.IndexOf(s, StringComparison.InvariantCultureIgnoreCase) > -1)) {
+                        if (IGNORED_SUBTITLE_COMPONENTS.IsMatch(subtitle)) {
                             continue;
                         }
                         titles.Add(title);
