@@ -1,3 +1,203 @@
+2018	Black Panther
+2018	Avengers: Infinity War
+2018	Incredibles 2
+2018	Jurassic World: Fallen Kingdom
+2018	Deadpool 2
+2018	Dr. Seuss' The Grinch
+2018	Mission: Impossible - Fallout
+2018	Ant-Man and the Wasp
+2018	Solo: A Star Wars Story
+2018	Venom
+2018	A Star is Born
+2018	A Quiet Place
+2018	Bohemian Rhapsody
+2018	Crazy Rich Asians
+2018	Hotel Transylvania 3: Summer Vacation
+2018	Ralph Breaks the Internet
+2018	Halloween
+2018	Fantastic Beasts: The Crimes of Grindelwald
+2018	The Meg
+2018	Ocean's 8
+2018	Ready Player One
+2018	Mamma Mia! Here We Go Again
+2018	The Nun
+2018	Peter Rabbit
+2018	Creed II
+2018	Aquaman
+2018	The Equalizer 2
+2018	Rampage
+2018	A Wrinkle in Time
+2018	Fifty Shades Freed
+2018	Disney's Christopher Robin
+2018	I Can Only Imagine
+2018	Smallfoot
+2018	Night School
+2018	Spider-Man: Into The Spider-Verse
+2018	Game Night
+2018	The First Purge
+2018	Book Club
+2018	The House With A Clock In Its Walls
+2018	Skyscraper
+2018	Insidious: The Last Key
+2018	Instant Family
+2018	Blockers
+2018	Pacific Rim Uprising
+2018	Tomb Raider
+2018	Maze Runner: The Death Cure
+2018	Tag
+2018	The Nutcracker and the Four Realms
+2018	A Simple Favor
+2018	Life of the Party 
+2018	The Predator
+2018	Overboard
+2018	Sicario: Day of the Soldado
+2018	Mary Poppins Returns
+2018	I Feel Pretty
+2018	BlacKkKlansman
+2018	Red Sparrow
+2018	Goosebumps 2: Haunted Halloween
+2018	Breaking In
+2018	12 Strong
+2018	Den of Thieves
+2018	First Man
+2018	Hereditary
+2018	Tyler Perry's Acrimony
+2018	Sherlock Gnomes
+2018	Uncle Drew
+2018	The Mule
+2018	Widows
+2018	Truth or Dare
+2018	Paddington 2
+2018	Love, Simon
+2018	The Commuter
+2018	The 15:17 to Paris
+2018	Mile 22
+2018	Alpha
+2018	Peppermint
+2018	Bumblebee
+2018	Death Wish
+2018	The Spy Who Dumped Me
+2018	Annihilation
+2018	Isle Of Dogs
+2018	Nobody's Fool
+2018	Adrift
+2018	Super Troopers 2
+2018	Slender Man
+2018	Robin Hood
+2018	Teen Titans Go! To The Movies
+2018	The Hate U Give
+2018	Green Book
+2018	Searching
+2018	Winchester
+2018	Strangers: Prey at Night
+2018	White Boy Rick
+2018	Won't You Be My Neighbor?
+2018	Overlord
+2018	Proud Mary
+2018	The Happytime Murders
+2018	Superfly
+2018	Show Dogs
+2018	Bad Times At The El Royale
+2017	Star Wars: The Last Jedi
+2017	Beauty and the Beast
+2017	Wonder Woman
+2017	Jumanji: Welcome to the Jungle
+2017	Guardians of the Galaxy Vol. 2
+2017	Spider-Man: Homecoming
+2017	It
+2017	Thor: Ragnarok
+2017	Despicable Me 3
+2017	Justice League
+2017	Logan
+2017	The Fate of the Furious
+2017	Coco
+2017	Dunkirk
+2017	Get Out
+2017	The LEGO Batman Movie
+2017	The Boss Baby
+2017	The Greatest Showman
+2017	Pirates of the Caribbean: Dead Men Tell No Tales
+2017	Kong: Skull Island
+2017	Cars 3
+2017	War for the Planet of the Apes
+2017	Split
+2017	Wonder
+2017	Transformers: The Last Knight
+2017	Girls Trip
+2017	Fifty Shades Darker
+2017	Baby Driver
+2017	Pitch Perfect 3
+2017	Daddy's Home 2
+2017	Murder on the Orient Express
+2017	Annabelle: Creation
+2017	Kingsman: The Golden Circle
+2017	Blade Runner 2049
+2017	John Wick: Chapter Two
+2017	The Emoji Movie
+2017	Power Rangers
+2017	Ferdinand
+2017	The Post
+2017	The Mummy
+2017	The Hitman's Bodyguard
+2017	Alien: Covenant
+2017	Captain Underpants: The First Epic Movie
+2017	A Bad Moms Christmas
+2017	A Dog's Purpose
+2017	The Shape of Water
+2017	The LEGO Ninjago Movie
+2017	Baywatch
+2017	The Shack
+2017	Darkest Hour
+2017	Happy Death Day
+2017	Three Billboards Outside Ebbing, Missouri
+2017	Atomic Blonde
+2017	American Made
+2017	The Dark Tower
+2017	Lady Bird
+2017	Tyler Perry's Boo 2! A Madea Halloween
+2017	Snatched
+2017	The Great Wall
+2017	Smurfs: The Lost Village
+2017	Going in Style
+2017	All Eyez on Me
+2017	xXx: The Return of Xander Cage
+2017	47 Meters Down
+2017	The Big Sick
+2017	Valerian and the City of a Thousand Planets
+2017	The Star
+2017	Ghost in the Shell
+2017	King Arthur: Legend of the Sword
+2017	Jigsaw
+2017	American Assassin
+2017	The Foreigner
+2017	Everything, Everything
+2017	Wind River
+2017	Geostorm
+2017	Monster Trucks
+2017	Fist Fight
+2017	How to be a Latin Lover
+2017	Kidnap
+2017	Underworld: Blood Wars
+2017	The Mountain Between Us
+2017	Life
+2017	I, Tonya
+2017	Hostiles
+2017	Molly's Game
+2017	The Nut Job 2: Nutty by Nature
+2017	Rings
+2017	Logan Lucky
+2017	Home Again
+2017	Resident Evil: The Final Chapter
+2017	The House
+2017	All the Money in the World
+2017	Gifted
+2017	Downsizing
+2017	The Bye Bye Man
+2017	Victoria and Abdul
+2017	Rough Night
+2017	My Little Pony: The Movie
+2017	Leap!
+2017	The Disaster Artist
 2016	Finding Dory
 2016	Rogue One: A Star Wars Story
 2016	Captain America: Civil War
@@ -149,7 +349,7 @@
 2015	Southpaw
 2015	Insidious Chapter 3
 2015	Daddy's Home
-2015	Alvin and the Chipmunks The Road Chip
+2015	Alvin and the Chipmunks: The Road Chip
 2015	Poltergeist
 2015	Jupiter Ascending
 2015	Sicario
@@ -468,7 +668,7 @@
 2012	The Possession
 2012	Diary of a Wimpy Kid: Dog Days
 2012	Sinister
-2012	Beauty and the Beast (3D)
+2012	Beauty and the Beast
 2012	Savages
 2012	The Best Exotic Marigold Hotel
 2012	Moonrise Kingdom
@@ -479,7 +679,7 @@
 2012	Resident Evil: Retribution
 2012	The Cabin in the Woods
 2012	What to Expect When You're Expecting
-2012	Finding Nemo (3D)
+2012	Finding Nemo
 2012	End of Watch
 2012	Rock of Ages
 2012	Abraham Lincoln: Vampire Hunter
@@ -491,7 +691,7 @@
 2012	Frankenweenie
 2012	Step Up Revolution
 2012	Tyler Perry's Good Deeds
-2012	Monsters, Inc. (3D)
+2012	Monsters, Inc.
 2012	2016 Obama's America
 2012	House at the End of The Street
 2012	The Pirates! Band of Misfits
@@ -790,7 +990,7 @@
 2009	Push
 2009	9
 2009	The Soloist
-2009	Toy Story / Toy Story 2 (3D)
+2009	Toy Story / Toy Story 2
 2009	Did You Hear About the Morgans?
 2009	The Stepfather
 2009	The Uninvited
