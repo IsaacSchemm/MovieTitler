@@ -23,27 +23,6 @@ using System.Text.RegularExpressions;
 public static class Program {
 
     public static void Main() {
-        //Create a New set of credentials for the application.
-        //var appCredentials = new TwitterCredentials(ConfigurationManager.AppSettings("ConsumerKey"),
-        //                                            ConfigurationManager.AppSettings("ConsumerSecret"));
-
-        //Init the authentication process And store the related `AuthenticationContext`.
-        //var authenticationContext = AuthFlow.InitAuthentication(appCredentials);
-
-        //Go to the URL so that Twitter authenticates the user And gives them a PIN code.
-        //Process.Start("firefox", authenticationContext.AuthorizationURL);
-
-        //Ask the user to enter the pin code given by Twitter
-        //var pinCode = Console.ReadLine();
-
-        //With this pin code it Is now possible to get the credentials back from Twitter
-        //var userCredentials = AuthFlow.CreateCredentialsFromVerifierCode(pinCode, authenticationContext);
-
-        //Use the user credentials in your application
-        //Auth.SetCredentials(userCredentials);
-
-        //return;
-
         HostFactory.Run(x => {
             x.Service<MovieTitler>(s => {
                 s.ConstructUsing(name => new MovieTitler());
@@ -181,7 +160,6 @@ public class MovieTitler {
         logger.Debug("Creating user stream...");
         ReplyLimit = 6;
         UserStream = Tweetinvi.Stream.CreateUserStream(Credentials);
-        UserStream.TweetCreatedByAnyoneButMe += ReplyHandler;
 
         // The Start() method may have already run - check whether the periodic tweet timer is running, and make sure the user stream has the same state.
         if (TweetTimer.Enabled) {
@@ -222,33 +200,37 @@ public class MovieTitler {
         });
     }
 
-    private void ReplyHandler(object sender, TweetReceivedEventArgs args) {
-        try {
-            InitTask.Wait();
+    public string Generate()
+    {
+        for (int i = 0; ; i++)
+        {
+            int index1 = R.Next(0, Titles.Count);
+            int index2 = R.Next(0, Subtitles.Count);
+            string part1 = Titles[index1];
+            string part2 = Subtitles[index2];
+            string newTitle = part1 + part2;
 
-            if (args.Tweet.UserMentions.Any(x => x.Id == MyId) & !args.Tweet.IsRetweet) {
-                if (ReplyLimit <= 0) return;
-
-                ReplyLimit -= 1;
-                Task.Delay(60000).ContinueWith(t => ReplyLimit++);
-
-                string[] split = args.Tweet.Text.Split('"');
-                if (split.Length == 3 && split[2].EndsWith("?")) {
-                    string segment = split[1];
-                    var movies = this.FullTitles.Where(s => s.IndexOf(segment, StringComparison.InvariantCultureIgnoreCase) >= 0).OrderBy(s => R.Next());
-                    string text = "@" + args.Tweet.CreatedBy.ScreenName + " Sorry, I don't know any movies that have that in the title.";
-                    if ((movies.Any())) {
-                        text = "@" + args.Tweet.CreatedBy.ScreenName + " I found: " + string.Join("; ", movies);
-                        if (text.Length > 140) {
-                            text = text.Substring(0, 139) + (char)8230;
-                        }
-                    }
-                    logger.Info(DateTime.Now + ": " + text);
-                    Auth.ExecuteOperationWithCredentials(Credentials, () => Tweet.PublishTweet(text));
-                }
+            if (FullTitles.Contains(newTitle))
+            {
+                // This is a real movie, so don't tweet it.
+                continue;
             }
-        } catch (Exception ex) {
-            logger.Error(ex);
+
+            if (i >= 50)
+            {
+                // Tried 50 combinations and they all result in reuse of part of a title - give up and use it anyway.
+                return newTitle;
+            }
+
+            var similar = PreviousTweets.Where(s => s.StartsWith(part1) | s.EndsWith(part2));
+            if (similar.Any())
+            {
+                // Either the title or subtitle was used in a recent tweet - try generating a new title.
+                //logger.Info("Skipping generated title: " + newTitle);
+                continue;
+            }
+
+            return newTitle;
         }
     }
 
@@ -260,44 +242,14 @@ public class MovieTitler {
 
             TweetTimer.Interval = double.Parse(ConfigurationManager.AppSettings["IntervalMs"] ?? "60000");
 
-            int i = 0;
-            string newTitle = null;
+            string newTitle = Generate();
 
-            while (newTitle == null) {
-                int index1 = R.Next(0, Titles.Count);
-                int index2 = R.Next(0, Subtitles.Count);
-                string part1 = Titles[index1];
-                string part2 = Subtitles[index2];
-                newTitle = part1 + part2;
-
-                if (FullTitles.Contains(newTitle)) {
-                    // This is a real movie, so don't tweet it.
-                    continue;
-                }
-
-                if (i >= 50) {
-                    // Tried 50 combinations and they all result in reuse of part of a title - give up and use it anyway.
-                    break;
-                }
-
-                var similar = PreviousTweets.Where(s => s.StartsWith(part1) | s.EndsWith(part2));
-                if (similar.Any()) {
-                    // Either the title or subtitle was used in a recent tweet - try generating a new title.
-                    logger.Info("Skipping generated title: " + newTitle);
-                    newTitle = null;
-                }
-
-                i += 1;
+            logger.Info(DateTime.Now + ": " + newTitle);
+            PreviousTweets.Add(newTitle);
+            if (PreviousTweets.Count > PreviousTweetsToKeep) {
+                PreviousTweets.RemoveAt(0);
             }
-
-            if (newTitle != null) {
-                logger.Info(DateTime.Now + ": " + newTitle);
-                PreviousTweets.Add(newTitle);
-                if (PreviousTweets.Count > PreviousTweetsToKeep) {
-                    PreviousTweets.RemoveAt(0);
-                }
-                Auth.ExecuteOperationWithCredentials(Credentials, () => Tweet.PublishTweet(newTitle));
-            }
+            Auth.ExecuteOperationWithCredentials(Credentials, () => Tweet.PublishTweet(newTitle));
         } catch (Exception ex) {
             logger.Error(ex);
         }
