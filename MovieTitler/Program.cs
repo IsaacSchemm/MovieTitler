@@ -44,7 +44,6 @@ public class MovieTitler {
 
     private static Random R = new Random();
     private static Regex PARTX = new Regex("( -)? Part ([XVI]+|[1-9]+)$");
-    private static Regex IGNORED_SUBTITLE_COMPONENTS = new Regex("(3d|re-issue|imax)", RegexOptions.IgnoreCase);
 
     // This task is launched when the class is initialized, and it creates everything below except TweetTimer.
     private Task InitTask;
@@ -66,14 +65,8 @@ public class MovieTitler {
     // Timer for periodically sending a tweet.
     private Timer TweetTimer;
 
-    // Twitter user ID of the account this bot is using.
-    private long MyId;
-
     // User stream - used to read @replies so the bot can respond.
     private IUserStream UserStream;
-
-    // Limit of replies per minute, to avoid any possible problems from tweeting too often.
-    private int ReplyLimit;
 
     public MovieTitler() {
         logger.Debug("Creating tweet timer...");
@@ -122,16 +115,18 @@ public class MovieTitler {
                         fullTitle.LastIndexOf(" - "),
                         fullTitle.LastIndexOf(": ")
                     }.Max();
+                    if (index == -1) index = fullTitle.LastIndexOf(" and the ");
                     if (index >= 0) {
                         string title = fullTitle.Substring(0, index);
                         string subtitle = fullTitle.Substring(index);
 
                         // Don't parse "Mission: Impossible" as a title and subtitle
                         if (title == "Mission") continue;
-                        // Skip some common parentheticals that aren't part of the title
-                        if (IGNORED_SUBTITLE_COMPONENTS.IsMatch(subtitle)) {
-                            continue;
-                        }
+                        // Don't parse "Sex and the City" as two titles like Captain Holt does
+                        if (title == "Sex") continue;
+                        // Others to skip
+                        if (title == "Il Postino") continue;
+                        if (title == "Beauty") continue;
                         titles.Add(title);
                         subtitles.Add(subtitle);
                     }
@@ -158,7 +153,6 @@ public class MovieTitler {
         Credentials = new TwitterCredentials(jsonObj["ConsumerKey"], jsonObj["ConsumerSecret"], jsonObj["AccessToken"], jsonObj["AccessTokenSecret"]);
 
         logger.Debug("Creating user stream...");
-        ReplyLimit = 6;
         UserStream = Tweetinvi.Stream.CreateUserStream(Credentials);
 
         // The Start() method may have already run - check whether the periodic tweet timer is running, and make sure the user stream has the same state.
@@ -177,7 +171,6 @@ public class MovieTitler {
                 logger.Error(ExceptionHandler.GetLastException());
                 return;
             }
-            this.MyId = u.Id;
         });
 
         logger.Debug("Getting previous tweets...");
