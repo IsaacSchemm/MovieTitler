@@ -1,10 +1,6 @@
-﻿
-using Microsoft.VisualBasic;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Configuration;
 using System.IO;
 using System.Timers;
@@ -12,17 +8,43 @@ using Newtonsoft.Json;
 using NLog;
 using Topshelf;
 using Tweetinvi;
-using Tweetinvi.Events;
 using Tweetinvi.Models;
 using Tweetinvi.Streaming;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Mastonet;
+
+public class Keys
+{
+    public Dictionary<string, string> Twitter;
+    public Mastonet.Entities.AppRegistration MastodonAppRegistration;
+    public Mastonet.Entities.Auth MastodonAuth;
+
+    public string MastodonInstance {
+        get {
+            return MastodonAppRegistration.Instance;
+        }
+        set {
+            MastodonAppRegistration.Instance = value;
+        }
+    }
+}
 
 public static class Program {
 
     public static void Main() {
+        //var authClient = new AuthenticationClient("botsin.space");
+        //var appRegistration = authClient.CreateApp("MovieTitler", Scope.Read | Scope.Write, website: "https://github.com/IsaacSchemm/MovieTitler").GetAwaiter().GetResult();
+        //string u = Console.ReadLine();
+        //string p = Console.ReadLine();
+        //var auth = authClient.ConnectWithPassword(u, p).GetAwaiter().GetResult();
+        //Console.WriteLine(JsonConvert.SerializeObject(new
+        //{
+        //    appRegistration,
+        //    auth
+        //}));
         HostFactory.Run(x => {
             x.Service<MovieTitler>(s => {
                 s.ConstructUsing(name => new MovieTitler());
@@ -31,8 +53,8 @@ public static class Program {
             });
 
             x.RunAsLocalSystem();
-            x.SetDescription("Twitter bot that combines movie titles and subtitles");
-            x.SetDisplayName("Twitter Movie Titler");
+            x.SetDescription("Twitter/Mastodon bot that combines movie titles and subtitles");
+            x.SetDisplayName("MovieTitler");
             x.SetServiceName("MovieTitler");
         });
     }
@@ -59,14 +81,12 @@ public class MovieTitler {
     private List<string> PreviousTweets;
     private int PreviousTweetsToKeep;
 
-    // Twitter credentials, read from KeysFile.
+    // Credentials, read from KeysFile.
     private ITwitterCredentials Credentials;
+    private MastodonClient MastodonClient;
 
     // Timer for periodically sending a tweet.
     private Timer TweetTimer;
-
-    // User stream - used to read @replies so the bot can respond.
-    private IUserStream UserStream;
 
     public MovieTitler() {
         logger.Debug("Creating tweet timer...");
@@ -74,10 +94,12 @@ public class MovieTitler {
         TweetTimer.Elapsed += SendTweet;
 
         // The rest of the class members are initialized asynchronously, so that the service can start quickly without having to request additional time from Windows.
-        InitTask = Task.Run(() => InitTaskSubroutine());
+        InitTask = InitTaskSubroutine();
     }
 
-    private void InitTaskSubroutine() {
+    private async Task InitTaskSubroutine() {
+        await Task.Yield();
+
         logger.Debug("Reading text file...");
         string[] fileNames = ConfigurationManager.AppSettings["SourceFile"].Split(',');
 
@@ -148,49 +170,63 @@ public class MovieTitler {
         // Credentials are stored in a json file.
         // Plain text or xml would have been fine too, but the Twitter integration means we need to include the json parser anyway.
         logger.Debug("Reading credentials...");
-        var jsonObj = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(ConfigurationManager.AppSettings["KeysFile"]));
+        var jsonObj = JsonConvert.DeserializeObject<Keys>(File.ReadAllText(ConfigurationManager.AppSettings["KeysFile"]));
 
-        Credentials = new TwitterCredentials(jsonObj["ConsumerKey"], jsonObj["ConsumerSecret"], jsonObj["AccessToken"], jsonObj["AccessTokenSecret"]);
+        Credentials = jsonObj.Twitter == null
+            ? null
+            : new TwitterCredentials(jsonObj.Twitter["ConsumerKey"], jsonObj.Twitter["ConsumerSecret"], jsonObj.Twitter["AccessToken"], jsonObj.Twitter["AccessTokenSecret"]);
+        MastodonClient = jsonObj.MastodonAppRegistration == null || jsonObj.MastodonAuth == null
+            ? null
+            : new MastodonClient(jsonObj.MastodonAppRegistration, jsonObj.MastodonAuth);
 
-        logger.Debug("Creating user stream...");
-        UserStream = Tweetinvi.Stream.CreateUserStream(Credentials);
+        this.PreviousTweets = new List<string>();
 
-        // The Start() method may have already run - check whether the periodic tweet timer is running, and make sure the user stream has the same state.
-        if (TweetTimer.Enabled) {
-            logger.Debug("Tweet timer is already running - turning on user stream.");
-            UserStream.StartStreamAsync();
-        } else {
-            logger.Debug("Tweet timer is not running - not turning on user stream yet.");
-        }
+        if (Credentials != null) { 
+            logger.Debug("Finding logged in Twitter user...");
+            IUserIdentifier u = null;
+            Auth.ExecuteOperationWithCredentials(Credentials, () => {
+                u = User.GetAuthenticatedUser();
+                if (u == null)
+                {
+                    logger.Error(ExceptionHandler.GetLastException());
+                    return;
+                }
+            });
 
-        logger.Debug("Finding logged in user...");
-        IUserIdentifier u = null;
-        Auth.ExecuteOperationWithCredentials(Credentials, () => {
-            u = User.GetAuthenticatedUser();
-            if (u == null) {
-                logger.Error(ExceptionHandler.GetLastException());
-                return;
-            }
-        });
+            logger.Debug("Getting previous tweets...");
+            Auth.ExecuteOperationWithCredentials(Credentials, () => {
+                if (u == null) {
+                    return;
+                }
 
-        logger.Debug("Getting previous tweets...");
-        PreviousTweets = new List<string>();
-        Auth.ExecuteOperationWithCredentials(Credentials, () => {
-            if (u == null) {
-                return;
-            }
-
-            var parameters = new Tweetinvi.Parameters.UserTimelineParameters();
-            parameters.ExcludeReplies = true;
-            parameters.MaximumNumberOfTweetsToRetrieve = PreviousTweetsToKeep;
-            var tweets = Timeline.GetUserTimeline(u, parameters);
-            foreach (var tweet in tweets) {
-                if (!tweet.Text.StartsWith("@")) {
+                var parameters = new Tweetinvi.Parameters.UserTimelineParameters {
+                    ExcludeReplies = true,
+                    MaximumNumberOfTweetsToRetrieve = PreviousTweetsToKeep
+                };
+                var tweets = Timeline.GetUserTimeline(u, parameters);
+                foreach (var tweet in tweets) {
                     logger.Debug("Found previous tweet: " + tweet.Text);
                     this.PreviousTweets.Add(tweet.Text);
                 }
+            });
+        }
+
+        if (MastodonClient != null) {
+            logger.Debug("Finding logged in Mastodon user...");
+            Mastonet.Entities.Account a = await MastodonClient.GetCurrentUser();
+
+            logger.Debug("Getting previous toots...");
+            var toots = await MastodonClient.GetAccountStatuses(a.Id, new ArrayOptions {
+                Limit = PreviousTweetsToKeep
+            }, excludeReplies: true);
+            foreach (var toot in toots) {
+                string content = Regex.Replace(toot.Content, @"<p>(.*)</p>", "$1");
+                logger.Debug("Found previous toot: " + content);
+                if (!this.PreviousTweets.Contains(content)) {
+                    this.PreviousTweets.Add(content);
+                }
             }
-        });
+        }
     }
 
     public string Generate()
@@ -227,7 +263,7 @@ public class MovieTitler {
         }
     }
 
-    public void SendTweet(object state, EventArgs args) {
+    public async void SendTweet(object state, EventArgs args) {
         try {
             InitTask.Wait();
 
@@ -242,7 +278,14 @@ public class MovieTitler {
             if (PreviousTweets.Count > PreviousTweetsToKeep) {
                 PreviousTweets.RemoveAt(0);
             }
-            Auth.ExecuteOperationWithCredentials(Credentials, () => Tweet.PublishTweet(newTitle));
+
+            if (Credentials != null) {
+                Auth.ExecuteOperationWithCredentials(Credentials, () => Tweet.PublishTweet(newTitle));
+            }
+
+            if (MastodonClient != null) {
+                await MastodonClient.PostStatus(newTitle, Visibility.Public);
+            }
         } catch (Exception ex) {
             logger.Error(ex);
         }
@@ -262,18 +305,10 @@ public class MovieTitler {
             TweetTimer.Interval = double.Parse(ConfigurationManager.AppSettings["IntervalMs"] ?? "60000");
         }
         TweetTimer.Start();
-
-        if (UserStream != null) {
-            UserStream.StartStream();
-        }
     }
 
     public void ServiceStop() {
         logger.Info("Service stopping");
         TweetTimer.Stop();
-
-        if (UserStream != null) {
-            UserStream.StopStream();
-        }
     }
 }
