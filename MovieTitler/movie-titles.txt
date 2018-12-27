@@ -1197,7 +1197,7 @@
 2007	Sicko
 2007	Across the Universe
 2007	Perfect Stranger
-2007	Sea Monsters: A Prehistoric Adventure (IMAX)
+2007	Sea Monsters: A Prehistoric Adventure
 2006	Pirates of the Caribbean: Dead Man's Chest
 2006	Night at the Museum
 2006	Cars
@@ -1267,7 +1267,7 @@
 2006	Hostel
 2006	Nanny McPhee
 2006	Silent Hill
-2006	Deep Sea 3D (IMAX)
+2006	Deep Sea 3D
 2006	We Are Marshall
 2006	Glory Road
 2006	Lady in the Water
@@ -1376,7 +1376,7 @@
 2005	The Island
 2005	The Ringer
 2005	Hostage
-2005	Magnificent Desolation (IMAX)
+2005	Magnificent Desolation
 2005	The Constant Gardener
 2005	In Her Shoes
 2005	Bad News Bears
@@ -1625,7 +1625,7 @@
 2002	Panic Room
 2002	Maid in Manhattan
 2002	Two Weeks Notice
-2002	Space Station 3-D (IMAX)
+2002	Space Station 3-D
 2002	Red Dragon
 2002	The Scorpion King
 2002	Spy Kids 2: The Island of Lost Dreams
@@ -1695,7 +1695,7 @@
 2002	All About the Benjamins
 2002	Frida
 2002	Jonah: A VeggieTales Movie
-2002	Beauty and the Beast (IMAX)
+2002	Beauty and the Beast
 2002	The Transporter
 2002	The Sweetest Thing
 2001	Harry Potter and the Sorcerer's Stone
@@ -1847,7 +1847,7 @@
 2000	Shanghai Noon
 2000	Romeo Must Die
 2000	Final Destination
-1997	Fantasia 2000 (IMAX)
+1997	Fantasia 2000
 2000	Finding Forrester
 2000	The Road to El Dorado
 2000	Men of Honor
@@ -1986,7 +1986,7 @@
 1999	Summer of Sam
 1999	Anywhere But Here
 1999	An Ideal Husband
-1999	Galapagos (IMAX)
+1999	Galapagos
 1999	Drive Me Crazy
 1999	The Rage: Carrie 2
 1999	Go
@@ -2019,7 +2019,7 @@
 1998	The Mask of Zorro
 1998	Stepmom
 1998	Antz
-1998	Everest (IMAX)
+1998	Everest
 1998	The X-Files
 1998	The Wedding Singer
 1998	City of Angels
@@ -2040,14 +2040,14 @@
 1998	What Dreams May Come
 1998	Halloween: H20
 1998	Small Soldiers
-1998	T-Rex: Back to the Cretaceous (IMAX)
+1998	T-Rex: Back to the Cretaceous
 1998	Mighty Joe Young
 1998	Practical Magic
 1998	Meet Joe Black
 1998	The Negotiator
 1998	Ronin
 1998	The Siege
-1998	Mysteries of Egypt (IMAX)
+1998	Mysteries of Egypt
 1998	Pleasantville
 1998	The Faculty
 1998	I Still Know What You Did Last Summer
@@ -2066,7 +2066,7 @@
 1998	Madeline
 1998	Spice World
 1998	The Object of My Affection
-1998	Grease (Re-issue)
+1998	Grease
 1998	The Big Hit
 1998	Paulie
 1998	Bulworth
@@ -2173,7 +2173,7 @@
 1997	Father's Day
 1997	Grosse Pointe Blank
 1997	The Edge
-1997	The Little Mermaid (Re-issue)
+1997	The Little Mermaid
 1997	Event Horizon
 1997	An American Werewolf in Paris
 1997	Boogie Nights
@@ -2188,7 +2188,7 @@
 1997	Booty Call
 1997	The Apostle
 1997	Gone Fishin'
-1997	Thrill Ride (IMAX)
+1997	Thrill Ride
 1997	That Darn Cat
 1997	The Postman
 1997	That Old Feeling
@@ -2276,7 +2276,7 @@
 1996	High School High
 1996	Chain Reaction
 1996	Multiplicity
-1996	Oliver & Company (Re-issue)
+1996	Oliver & Company
 1996	Fear
 1996	The Glimmer Man
 1996	City Hall
@@ -2390,11 +2390,11 @@
 1995	Jury Duty
 1995	Devil in a Blue Dress
 1995	The Prophecy
-1995	Across the Sea of Time (IMAX)
+1995	Across the Sea of Time
 1995	Mad Love
 1995	Muriel's Wedding
 1995	Halloween: The Curse of Michael Myers
-1995	Wings of Courage (IMAX)
+1995	Wings of Courage
 1995	Kiss of Death
 1995	Candyman: Farewell to the Flesh
 1995	Nixon
@@ -2533,7 +2533,7 @@
 1993	The Beverly Hillbillies
 1993	Teenage Mutant Ninja Turtles III
 1993	Homeward Bound: The Incredible Journey
-1993	Snow White and the Seven Dwarfs (Re-issue)
+1993	Snow White and the Seven Dwarfs
 1993	Falling Down
 1993	The Piano
 1993	Hocus Pocus
@@ -2664,7 +2664,7 @@
 1992	Juice
 1992	Prelude to a Kiss
 1992	Hero
-1992	Pinocchio (Re-issue)
+1992	Pinocchio
 1992	Singles
 1992	Used People
 1992	The Babe
@@ -2680,7 +2680,7 @@
 1992	Rapid Fire
 1992	Cool World
 1992	Mr. Saturday Night
-1992	The Great Mouse Detective (re-issue)
+1992	The Great Mouse Detective
 1992	Class Act
 1992	Trespass
 1992	Enchanted April
@@ -2717,7 +2717,7 @@
 1991	JFK
 1991	Hot Shots!
 1991	What About Bob?
-1991	101 Dalmatians (Re-issue)
+1991	101 Dalmatians
 1991	The Last Boy Scout
 1991	My Girl
 1991	Boyz N the Hood
@@ -2826,7 +2826,7 @@
 1990	Goodfellas
 1990	Marked for Death
 1990	Robocop 2
-1990	The Jungle Book (re-issue)
+1990	The Jungle Book
 1990	Young Guns II
 1990	Gremlins 2: The New Batch
 1990	Rocky V
@@ -2846,7 +2846,7 @@
 1990	House Party
 1990	Jacob's Ladder
 1990	The Exorcist III
-1990	Fantasia (Re-issue)
+1990	Fantasia
 1990	Navy Seals
 1990	Ernest Goes to Jail
 1990	Ghost Dad
@@ -2896,7 +2896,7 @@
 1990	Nuns on the Run
 1990	Narrow Margin
 1990	The Witches
-1990	Adventures of Milo and Otis (Re-issue)
+1990	Adventures of Milo and Otis
 1990	The Two Jakes
 1989	Batman
 1989	Indiana Jones and the Last Crusade
@@ -2938,7 +2938,7 @@
 1989	The Bear
 1989	Weekend at Bernie's
 1989	Road House
-1989	Peter Pan (Re-issue)
+1989	Peter Pan
 1989	The Dream Team
 1989	Do the Right Thing
 1989	All Dogs Go to Heaven
@@ -2948,7 +2948,7 @@
 1989	Dad
 1989	Lock Up
 1989	Cousins
-1989	The Rescuers (Re-issue)
+1989	The Rescuers
 1989	Say Anything
 1989	An Innocent Man
 1989	The Fly II
@@ -2997,7 +2997,7 @@
 1989	Enemies, A Love Story
 1989	Disorganized Crime
 1989	Johnny Handsome
-1989	Lawrence of Arabia (re-issue)
+1989	Lawrence of Arabia
 1988	Rain Man
 1988	Who Framed Roger Rabbit
 1988	Coming to America
@@ -3025,7 +3025,7 @@
 1988	The Great Outdoors
 1988	Tequila Sunrise
 1988	Big Business
-1988	Bambi (Re-issue)
+1988	Bambi
 1988	Midnight Run
 1988	The Dead Pool
 1988	Red Heat
@@ -3040,7 +3040,7 @@
 1988	Funny Farm
 1988	Alien Nation
 1988	Gorillas in the Mist
-1988	The Fox and the Hound (re-issue)
+1988	The Fox and the Hound
 1988	License to Drive
 1988	Short Circuit 2
 1988	Married to the Mob
@@ -3119,7 +3119,7 @@
 1987	The Living Daylights
 1987	Eddie Murphy Raw
 1987	Planes, Trains and Automobiles
-1987	Snow White and the Seven Dwarfs (Re-issue)
+1987	Snow White and the Seven Dwarfs
 1987	Full Metal Jacket
 1987	A Nightmare on Elm Street 3: Dream Warriors
 1987	The Last Emperor
@@ -3133,7 +3133,7 @@
 1987	No Way Out
 1987	Like Father, Like Son
 1987	Adventures in Babysitting
-1987	Cinderella (re-issue)
+1987	Cinderella
 1987	* batteries not included
 1987	The Lost Boys
 1987	Can't Buy Me Love
@@ -3160,7 +3160,7 @@
 1987	Some Kind of Wonderful
 1987	Project X
 1987	The Big Easy
-1987	The Aristocats (Re-issue)
+1987	The Aristocats
 1987	Born in East L.A.
 1987	Masters of the Universe
 1987	Angel Heart
