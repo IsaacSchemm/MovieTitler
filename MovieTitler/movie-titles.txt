@@ -1,3 +1,103 @@
+2022	Top Gun: Maverick
+2022	Doctor Strange in the Multiverse of Madness
+2022	Black Panther: Wakanda Forever
+2022	Jurassic World: Dominion
+2022	Minions: The Rise of Gru
+2022	The Batman
+2022	Thor: Love and Thunder
+2022	Sonic the Hedgehog 2
+2022	Black Adam
+2022	Elvis
+2022	Uncharted
+2022	Nope
+2022	Lightyear
+2022	Smile
+2022	The Lost City
+2022	Bullet Train
+2022	The Bad Guys
+2022	Fantastic Beasts: The Secrets of Dumbledore
+2022	DC League of Super Pets
+2022	Where the Crawdads Sing
+2022	The Black Phone
+2022	Scream
+2022	Morbius
+2022	Everything Everywhere All At Once
+2022	The Woman King
+2022	Ticket to Paradise
+2022	Halloween Ends
+2022	Dog
+2022	jackass forever
+2022	Lyle, Lyle, Crocodile
+2022	Death on the Nile
+2022	Don’t Worry, Darling
+2022	Downton Abbey: A New Era
+2022	Barbarian
+2022	The Northman
+2022	Gekijouban Jujutsu Kaisen 0
+2022	Doragon boru supa supa hiro (ラゴンボール超 スーパーヒーロー)…
+2022	The Bob’s Burgers Movie
+2022	Beast
+2022	Strange World
+2022	The Invitation
+2022	The Menu
+2022	Marry Me
+2022	Ambulance
+2022	Father Stu
+2022	The Unbearable Weight of Massive Talent
+2022	Prey for the Devil
+2022	Moonfall
+2022	Paws of Fury: The Legend of Hank
+2022	Glass Onion: A Knives Out Mystery
+2021	Spider-Man: No Way Home
+2021	Shang-Chi and the Legend of the Ten Rings
+2021	Venom: Let There be Carnage
+2021	Black Widow
+2021	F9: The Fast Saga
+2021	Eternals
+2021	Sing 2
+2021	No Time to Die
+2021	A Quiet Place: Part II
+2021	Ghostbusters: Afterlife
+2021	Free Guy
+2021	Jungle Cruise
+2021	Dune
+2021	Godzilla vs. Kong
+2021	Encanto
+2021	Halloween Kills
+2021	Cruella
+2021	Space Jam: A New Legacy
+2021	The Conjuring: The Devil Made Me Do It
+2021	Candyman
+2021	The Boss Baby: Family Business
+2021	The Addams Family 2
+2021	The Suicide Squad
+2021	Raya and the Last Dragon
+2021	House of Gucci
+2021	Kimetsu no Yaiba: Mugen Ressha-Hen
+2021	Clifford the Big Red Dog
+2021	Old
+2021	Tom and Jerry
+2021	The Forever Purge
+2021	Mortal Kombat
+2021	Peter Rabbit 2: The Runaway
+2021	PAW Patrol: The Movie
+2021	West Side Story
+2021	The Hitman’s Wife’s Bodyguard
+2021	The Matrix Resurrections
+2021	The King’s Man
+2021	Don’t Breathe 2
+2021	In the Heights
+2021	Snake Eyes: G.I. Joe Origins
+2021	Nobody
+2021	Wrath of Man
+2021	American Underdog: The Kurt Warner Story
+2021	Escape Room: Tournament of Champions
+2021	Respect
+2021	Spiral
+2021	Ron’s Gone Wrong
+2021	Spirit Untamed
+2021	Licorice Pizza
+2021	The Green Knight
 2020	Bad Boys for Life
 2020	1917
 2020	Sonic the Hedgehog
@@ -64,7 +164,7 @@
 2019	John Wick: Chapter 3 - Parabellum
 2019	How to Train Your Dragon: The Hidden World
 2019	The Secret Life of Pets 2
-2019	Pok�mon Detective Pikachu
+2019	Pokémon Detective Pikachu
 2019	Once Upon a Time... In Hollywood
 2019	Shazam!
 2019	Aquaman
