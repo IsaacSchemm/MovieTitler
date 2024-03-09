@@ -1,103 +1,103 @@
 2023	Barbie
 2023	The Super Mario Bros. Movie
-2023	Oppenheimer
-2023	Guardians of the Galaxy Vol. 3
-2023	Fast X
 2023	Spider-Man: Across the Spider-Verse
-2023	Wonka
+2023	Guardians of the Galaxy Vol. 3
+2023	Oppenheimer
 2023	The Little Mermaid
-2023	Mission: Impossible - Dead Reckoning Part One
-2023	Elemental
+2023	Wonka
 2023	Ant-Man and the Wasp: Quantumania
 2023	John Wick: Chapter 4
-2023	Transformers: Rise of the Beasts
-2023	Aquaman and the Lost Kingdom
-2023	Meg 2: The Trench
-2023	Indiana Jones and the Dial of Destiny
-2023	The Hunger Games: The Ballad of Songbirds & Snakes
-2023	Five Nights at Freddy's
-2023	Migration
-2023	Creed III
-2023	The Flash
-2023	The Nun II
-2023	Taylor Swift: The Eras Tour
-2023	Wish
 2023	Sound of Freedom
-2023	Napoleon
-2023	Dungeons & Dragons: Honor Among Thieves
-2023	Anyone But You
-2023	Trolls Band Together
-2023	The Marvels
-2023	PAW Patrol: The Mighty Movie
-2023	The Equalizer 3
-2023	Insidious: The Red Door
+2023	Taylor Swift: The Eras Tour
+2023	Indiana Jones and the Dial of Destiny
+2023	Mission: Impossible - Dead Reckoning Part One
+2023	The Hunger Games: The Ballad of Songbirds & Snakes
+2023	Transformers: Rise of the Beasts
+2023	Creed III
+2023	Elemental
+2023	Fast X
+2023	Five Nights at Freddy's
+2023	Aquaman and the Lost Kingdom
+2023	Migration
 2023	Teenage Mutant Ninja Turtles: Mutant Mayhem
 2023	Scream VI
-2023	The Boy and the Heron
+2023	The Flash
+2023	Trolls Band Together
+2023	Dungeons & Dragons: Honor Among Thieves
+2023	The Equalizer 3
+2023	Anyone But You
+2023	The Nun II
+2023	The Marvels
+2023	Meg 2: The Trench
+2023	Insidious: The Red Door
+2023	Blue Beetle
 2023	Killers of the Flower Moon
+2023	Haunted Mansion
 2023	Evil Dead Rise
 2023	The Exorcist: Believer
-2023	Shazam! Fury of the Gods
-2023	Blue Beetle
-2023	Pathaan
-2023	A Haunting in Venice
-2023	Gran Turismo
-2023	Haunted Mansion
-2023	Saw X
-2023	Detective Conan: Black Iron Submarine
-2023	Godzilla Minus One
-2023	Poor Things
-2023	The Creator
-2023	12.12: The Day
-2023	Animal
-2023	Talk to Me
-2023	Air
+2023	PAW Patrol: The Mighty Movie
 2023	Cocaine Bear
-2023	No Hard Feelings
-2023	The Roundup: No Way Out
-2023	The Pope's Exorcist
-2023	Plane
-2023	Titanic 25 Year Anniversary
+2023	Wish
+2023	Napoleon
 2023	The Color Purple
-2023	The Boogeyman
-2023	Frozen 2023 Re-release (Sing -A-Long)
-2023	65
-2023	Magic Mike's Last Dance
-2023	Demon Slayer: Kimetsu No Yaiba - To the Swordsmith Village
+2023	Shazam! Fury of the Gods
+2023	Godzilla Minus One
+2023	Saw X
 2023	The Boys in the Boat
-2023	Knock at the Cabin
-2023	Mummies
+2023	Air
 2023	Jesus Revolution
-2023	Asteroid City
-2023	Operation Fortune: Ruse de Guerre
-2023	Missing
-2023	Thanksgiving
-2023	Asterix & Obelix: The Middle Kingdom
-2023	Ruby Gillman: Teenage Kraken
-2023	Renaissance: A Film by Beyonc 
-2023	Spy x Family Code: White
-2023	Son of a Rich 2
-2023	Ferrari
-2023	The Holdovers
-2023	The Iron Claw
+2023	No Hard Feelings
+2023	Talk to Me
+2023	The Boy and the Heron
+2023	Gran Turismo
+2023	The Boogeyman
+2023	A Haunting in Venice
+2023	The Creator
 2023	80 for Brady
-2023	Miraculous: Ladybug & Cat Noir, the Movie
-2023	There's Still Tomorrow
+2023	Knock at the Cabin
+2023	The Iron Claw
+2023	Renaissance: A Film by Beyonc 
+2023	Poor Things
+2023	Missing
+2023	Plane
+2023	65
+2023	Thanksgiving
 2023	My Big Fat Greek Wedding 3
-2023	Expend4bles
-2023	Doraemon the Movie: Nobita's Sky Utopia
-2023	Smugglers
-2023	Kingdom 3
-2023	Ride On
+2023	Asteroid City
+2023	Magic Mike's Last Dance
 2023	Strays
-2023	Noryang: Deadly Sea
-2023	Alibi.com 2
-2023	The Bremen Town Musicians
-2023	Don't Call it Mystery: The Movie
-2023	Anatomy of a Fall
 2023	Priscilla
-2023	The Three Musketeers - Part I: D'Artagnan
-2023	Tokyo MER
+2023	American Fiction
+2023	Are You There God? It's Me, Margaret.
+2023	The Holdovers
+2023	The Pope's Exorcist
+2023	Ferrari
+2023	The Blackening
+2023	Book Club: The Next Chapter
+2023	Pathaan
+2023	Renfield
+2023	The Blind
+2023	The Covenant
+2023	Expend4bles
+2023	Champions
+2023	Ruby Gillman: Teenage Kraken
+2023	Jawan
+2023	Titanic 25 Year Anniversary
+2023	Animal
+2023	Dumb Money
+2023	The Last Voyage of the Demeter
+2023	Joy Ride
+2023	His Only Son
+2023	The Shift
+2023	About My Father
+2023	Bottoms
+2023	After Death
+2023	Saltburn
+2023	Past Lives
+2023	The Machine
+2023	The Nightmare Before Christmas 30th Anniversary Re-Release
+2023	Demon Slayer: Kimetsu No Yaiba - To the Swordsmith Village
+2023	House Party
 2022	Top Gun: Maverick
 2022	Doctor Strange in the Multiverse of Madness
 2022	Black Panther: Wakanda Forever
