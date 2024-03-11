@@ -1,10 +1,10 @@
 ﻿namespace MovieTitler.Generation
 
 module Movies =
-    let from year title = {|
+    let from year title = {
         Year = year
         Title = title
-    |}
+    }
 
     let List = [
         from 2023 "Barbie"

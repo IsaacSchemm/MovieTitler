@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Movie.fs" />
     <Compile Include="Movies.fs" />
   </ItemGroup>
 
