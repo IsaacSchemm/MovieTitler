@@ -3558,3 +3558,5 @@ module Movies =
         from 1987 "Death Wish 4: The Crackdown"
         from 1987 "The Chipmunk Adventure"
     ]
+
+    let Titles = set [for x in List do x.Title]

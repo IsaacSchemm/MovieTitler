@@ -74,31 +74,25 @@ namespace FunctionApp1
 
         private static readonly Random R = new();
 
-        private static string Generate(TitlesObject obj)
+        private static IEnumerable<string> Generate(TitlesObject obj)
         {
-            for (int i = 0; ; i++)
+            while (true)
             {
                 int index1 = R.Next(0, obj.Titles.Count);
                 int index2 = R.Next(0, obj.Subtitles.Count);
                 string part1 = obj.Titles[index1];
                 string part2 = obj.Subtitles[index2];
-                string newTitle = part1 + part2;
-
-                if (Movies.List.Select(x => x.Title).Contains(newTitle))
-                {
-                    // This is a real movie, so don't tweet it.
-                    continue;
-                }
-
-                return newTitle;
+                yield return part1 + part2;
             }
         }
 
         [Function("Function1")]
-        public async Task Run([TimerTrigger("33 35 21 * * *")]TimerInfo myTimer)
+        public async Task Run([TimerTrigger("0 0 5/8 * * *")]TimerInfo myTimer)
         {
             var obj = Candidates.Value;
-            string newTitle = Generate(obj);
+            string newTitle = Generate(obj)
+                .Except(Movies.Titles)
+                .First();
             await Task.WhenAll(PostToMastodon(newTitle), PostToTwitter(newTitle));
         }
 
