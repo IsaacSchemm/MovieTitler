@@ -46,7 +46,7 @@ type ActivityPubTranslator(mapper: IdMapper) =
         pair "followers" $"{actor}/followers"
         pair "following" $"{actor}/following"
         pair "preferredUsername" person.username
-        pair "name" person.username
+        pair "name" person.name
         pair "url" actor
         pair "publicKey" {|
             id = $"{actor}#main-key"

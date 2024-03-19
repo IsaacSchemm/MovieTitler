@@ -6,6 +6,7 @@ open MovieTitler.Data
 /// A user profile; in particular, the one created by this server.
 type Person = {
     username: string
+    name: string
 }
 
 /// A post to expose over ActivityPub.
@@ -29,6 +30,7 @@ type OutboxPage = {
 module Domain =
     let Actor: Person = {
         username = "bot"
+        name = "MovieTitler"
     }
 
     let AsPost (generatedPost: GeneratedPost) = {
