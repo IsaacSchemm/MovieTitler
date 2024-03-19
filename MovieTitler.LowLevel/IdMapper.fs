@@ -3,14 +3,13 @@
 open System
 open MovieTitler.Interfaces
 
-/// Provides mappings between MovieTitler's internal IDs and the public ActivityPub IDs of corresponding objects.
+/// Provides mappings between this bot's internal IDs and the public ActivityPub IDs of corresponding objects.
 type IdMapper(appInfo: IApplicationInformation) =
-    /// The ActivityPub actor ID of the single actor hosted by this server.
+    /// The ActivityPub actor ID of the bot hosted by this server.
     member _.ActorId =
         $"https://{appInfo.ApplicationHostname}/api/actor"
 
-    /// Generates a random ID that is not intended to be looked up.
-    /// Used for Update and Delete activities.
+    /// Generates a random ActivityPub ID that is not intended to be looked up.
     member _.GenerateTransientId() =
         $"https://{appInfo.ApplicationHostname}#transient-{Guid.NewGuid()}"
 

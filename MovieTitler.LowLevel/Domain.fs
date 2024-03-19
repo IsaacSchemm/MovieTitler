@@ -28,12 +28,12 @@ type PostHistoryPage = {
 
 module Domain =
     let Actor: Person = {
-        username = "movietitler"
+        username = "bot"
     }
 
     let AsPost (generatedPost: GeneratedPost) = {
         id = generatedPost.Id
-        content = generatedPost.MovieTitle
+        content = generatedPost.Content
         created = generatedPost.CreatedAt
     }
 

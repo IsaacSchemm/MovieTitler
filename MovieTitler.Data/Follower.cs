@@ -5,7 +5,7 @@
 namespace MovieTitler.Data
 {
     /// <summary>
-    /// An ActivityPub user who is following MovieTitler.
+    /// An ActivityPub user who is following this bot.
     /// </summary>
     public class Follower
     {

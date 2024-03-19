@@ -9,13 +9,12 @@ Public Interface IApplicationInformation
     ReadOnly Property ApplicationName As String
 
     ''' <summary>
-    ''' The MovieTitler version number.
+    ''' The application's version number.
     ''' </summary>
     ReadOnly Property VersionNumber As String
 
     ''' <summary>
-    ''' The host / domain name used by MovieTitler.
-    ''' May or may not be the same as the domain in the actor's handle.
+    ''' The host / domain name used by the bot.
     ''' </summary>
     ReadOnly Property ApplicationHostname As String
 

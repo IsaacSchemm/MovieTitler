@@ -1,5 +1,5 @@
 ﻿''' <summary>
-''' A representation of the public key component of Crowmask's signing key.
+''' A representation of the public key component of the bot's signing key.
 ''' </summary>
 Public Interface IActorKey
     ''' <summary>

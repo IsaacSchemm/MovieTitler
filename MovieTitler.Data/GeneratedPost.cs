@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MovieTitler.Data
 {
     /// <summary>
-    /// A generated post by MovieTitler.
+    /// A generated post by the bot.
     /// </summary>
     public class GeneratedPost
     {
@@ -17,13 +17,13 @@ namespace MovieTitler.Data
         public int Id { get; set; }
 
         /// <summary>
-        /// The generated movie title.
+        /// The post text (HTML).
         /// </summary>
         [Required]
-        public string MovieTitle { get; set; }
+        public string Content { get; set; }
 
         /// <summary>
-        /// When the movie title was generated.
+        /// When the post text was generated.
         /// </summary>
         public DateTimeOffset CreatedAt { get; set; }
     }

@@ -3,7 +3,7 @@
 open System.Net
 open MovieTitler.Interfaces
 
-/// Creates Markdown and HTML renditions of MovieTitler objects and pages, for
+/// Creates Markdown and HTML renditions of this bot's objects and pages, for
 /// use in the HTML web interface, or (for debugging) by other non-ActivityPub
 /// user agents.
 type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
@@ -12,41 +12,27 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
     let enc = WebUtility.HtmlEncode
 
     /// Renders an HTML page, given a title and a Markdown document.
-    let toHtml (title: string) (str: string) = String.concat "\n" [
-        "<!DOCTYPE html>"
-        "<html>"
-        "<head>"
-        "<title>"
-        WebUtility.HtmlEncode($"{enc title} - {appInfo.ApplicationName}")
-        "</title>"
-        "<meta name='viewport' content='width=device-width, initial-scale=1' />"
-        "<style type='text/css'>"
-        "body { line-height: 1.5; font-family: sans-serif; }"
-        "pre { white-space: pre-wrap; }"
-        "</style>"
-        "</head>"
-        "<body>"
-        Markdig.Markdown.ToHtml(str)
-        "</body>"
-        "</html>"
-    ]
-
-    /// A Markdown header that is included on all pages.
-    let sharedHeader = String.concat "\n" [
-        $"# [{enc appInfo.ApplicationName}]({appInfo.WebsiteUrl})"
-    ]
+    let toHtml (title: string) (str: string) = $"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>
+            $"{enc title} - ${enc appInfo.ApplicationName}"
+            </title>
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+        </head>
+        <body>
+            {Markdig.Markdown.ToHtml(str)}
+        </body>
+        </html>
+    """
 
     member _.ToMarkdown (person: Person, recentSubmissions: Post seq) = String.concat "\n" [
-        sharedHeader
-        $""
-        $"--------"
-        $""
         for post in recentSubmissions do
-            $"## {enc post.content}"
+            $"# {enc post.content}"
             $""
-        $""
-        $"----------"
-        $""
+            $"----------"
+            $""
         $"@{enc person.username}@{appInfo.ApplicationHostname}"
         $""
         $"[View post history](/api/actor/outbox/page)"
@@ -57,7 +43,7 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $""
         $"--------"
         $""
-        $"## [{enc appInfo.ApplicationName} {enc appInfo.VersionNumber}]({appInfo.WebsiteUrl}) 🐦‍⬛🎭"
+        $"## [{enc appInfo.ApplicationName} {enc appInfo.VersionNumber}]({appInfo.WebsiteUrl})"
         $""
         $"This program is free software: you can redistribute it and/or modify"
         $"it under the terms of the GNU Affero General Public License as published"
@@ -70,26 +56,21 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $"GNU Affero General Public License for more details."
     ]
 
-    member this.ToHtml (person: Person, recentSubmissions: Post seq) = this.ToMarkdown (person, recentSubmissions) |> toHtml appInfo.ApplicationName
+    member this.ToHtml (person: Person, recentSubmissions: Post seq) =
+        this.ToMarkdown (person, recentSubmissions)
+        |> toHtml appInfo.ApplicationName
 
-    member _.ToMarkdown (post: Post) = String.concat "\n" [
-        sharedHeader
-        $""
-        $"--------"
-        $""
-        $"## {enc post.content}"
-        $""
-        enc (post.created.UtcDateTime.ToString("MMM d, yyyy"))
-        $""
-    ]
+    member _.ToMarkdown (post: Post) = $"""
+        # {enc post.content}
 
-    member this.ToHtml (post: Post) = this.ToMarkdown post |> toHtml appInfo.ApplicationName
+        [{post.created.UtcDateTime.ToString("MMM d, yyyy")}]({mapper.GetObjectId(post.id)})
+    """
+
+    member this.ToHtml (post: Post) =
+        this.ToMarkdown post
+        |> toHtml appInfo.ApplicationName
 
     member _.ToMarkdown (postHistory: PostHistory) = String.concat "\n" [
-        sharedHeader
-        $""
-        $"--------"
-        $""
         $"## Post History"
         $""
         $"{postHistory.post_count} item(s)."
@@ -98,13 +79,11 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $""
     ]
 
-    member this.ToHtml (postHistory: PostHistory) = this.ToMarkdown postHistory |> toHtml $"{appInfo.ApplicationName} - Post History"
+    member this.ToHtml (postHistory: PostHistory) =
+        this.ToMarkdown postHistory
+        |> toHtml $"{appInfo.ApplicationName} - Post History"
 
     member _.ToMarkdown (page: PostHistoryPage) = String.concat "\n" [
-        sharedHeader
-        $""
-        $"--------"
-        $""
         $"## Posts"
         $""
         for post in page.posts do
@@ -122,4 +101,6 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $""
     ]
 
-    member this.ToHtml (page: PostHistoryPage) = this.ToMarkdown page |> toHtml $"{appInfo.ApplicationName} - Post History"
+    member this.ToHtml (page: PostHistoryPage) =
+        this.ToMarkdown page
+        |> toHtml $"{appInfo.ApplicationName} - Post History"

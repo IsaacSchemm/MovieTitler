@@ -5,24 +5,24 @@ open System.Net.Http.Headers
 open Microsoft.Net.Http.Headers
 open MovieTitler.Interfaces
 
-/// A type of formatting that MovieTitler supports for HTTP responses.
+/// A type of formatting that this bot supports for HTTP responses.
 type OutputFormatFamily = Markdown | HTML | ActivityPub | RSS | Atom
 
-/// An output format that MovieTitler supports, consisting of the general type of response (family) and an HTTP Content-Type value.
+/// An output format that this bot supports, consisting of the general type of response (family) and an HTTP Content-Type value.
 type OutputFormat = {
     Family: OutputFormatFamily
     MediaType: string
 }
 
-/// An object that helps MovieTitler determine the appropriate response type for an HTTP request.
-type ContentNegotiator(appInfo: IApplicationInformation) =
+/// An object that helps this bot determine the appropriate response type for an HTTP request.
+type ContentNegotiator() =
     /// Builds an OutputFormat object.
     let format family mediaType = {
         Family = family
         MediaType = mediaType
     }
 
-    /// A list of all response types supported by MovieTitler, in the order that MovieTitler prefers to use them.
+    /// A list of all response types supported by the bot, in the order that it prefers to use them.
     let supported = [
         // Markdown / plain text responses (may be useful for debugging).
         format Markdown "text/plain"

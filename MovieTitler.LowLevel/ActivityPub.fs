@@ -2,28 +2,28 @@
 
 open System
 open System.Collections.Generic
-open System.Net
 open System.Text.Json
 open MovieTitler.Interfaces
 
 /// Contains functions for JSON-LD serialization.
 module ActivityPubSerializer =
     /// A JSON-LD context that includes all fields used by MovieTitler.
-    let Context: obj list = [
+    let Context: obj = [
         "https://w3id.org/security/v1"
         "https://www.w3.org/ns/activitystreams"
     ]
 
     /// Converts ActivityPub objects in string/object pair format to an
     /// acceptable JSON-LD rendition.
-    let SerializeWithContext (apObject: IDictionary<string, obj>) = JsonSerializer.Serialize(dict [   
-        "@context", Context :> obj
-        for p in apObject do p.Key, p.Value
+    let SerializeWithContext (apObject: IDictionary<string, obj>) = JsonSerializer.Serialize(dict [
+        "@context", Context
+        for p in apObject do
+            p.Key, p.Value
     ])
 
 /// Creates ActivityPub objects (in string/object pair format) for actors,
 /// posts, and other objects tracked by MovieTitler.
-type ActivityPubTranslator(appInfo: IApplicationInformation, mapper: IdMapper) =
+type ActivityPubTranslator(mapper: IdMapper) =
     /// The MovieTitler actor ID.
     let actor = mapper.ActorId
 
