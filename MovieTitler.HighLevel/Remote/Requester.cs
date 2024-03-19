@@ -53,7 +53,7 @@ namespace MovieTitler.HighLevel.Remote
         /// <summary>
         /// Sends an ActivityPub activity to its external recipient.
         /// </summary>
-        /// <param name="activity">The activity to send, from Crowmask's database</param>
+        /// <param name="activity">The activity to send, from the bot's database</param>
         public async Task SendAsync(OutboundActivity activity)
         {
             var url = new Uri(activity.Inbox);

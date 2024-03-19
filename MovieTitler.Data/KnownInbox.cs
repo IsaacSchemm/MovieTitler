@@ -5,14 +5,14 @@
 namespace MovieTitler.Data
 {
     /// <summary>
-    /// The inbox of an actor or server that has sent messages to Crowmask in
+    /// The inbox of an actor or server that has sent messages to this bot in
     /// the past. Update and Delete activities are sent to these inboxes, in
     /// addition to followers.
     /// </summary>
     public class KnownInbox
     {
         /// <summary>
-        /// An internal Crowmask ID.
+        /// An internal ID.
         /// </summary>
         public Guid Id { get; set; }
 

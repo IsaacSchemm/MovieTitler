@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using MovieTitler.Data;
 using Microsoft.Azure.Functions.Worker;
+using System.Text.RegularExpressions;
 using MovieTitler.Generation;
+using Microsoft.EntityFrameworkCore;
+using MovieTitler.LowLevel;
+using MovieTitler.HighLevel;
 
-namespace FunctionApp1
+namespace MovieTitler.Functions
 {
-    public partial class Function
+    public partial class GeneratePost(ActivityPubTranslator translator, BotDbContext context, RemoteInboxLocator inboxLocator)
     {
         public class TitlesObject
         {
@@ -86,33 +85,57 @@ namespace FunctionApp1
             }
         }
 
-        [Function("Function1")]
-        public async Task Run([TimerTrigger("0 0 5/8 * * *")]TimerInfo myTimer)
+        /// <summary>
+        /// Creates and sends a new post. Runs every day at 5:00 AM.
+        /// </summary>
+        /// <param name="myTimer"></param>
+        /// <returns></returns>
+        [Function("GeneratePost")]
+        public async Task Run([TimerTrigger("0 0 5 * * *")] TimerInfo myTimer)
         {
-            var obj = Candidates.Value;
-            string newTitle = Generate(obj)
+            var recentPosts = await context.GeneratedPosts
+                .OrderByDescending(post => post.Id)
+                .Select(post => post.Content)
+                .Take(90)
+                .ToListAsync();
+
+            string newTitle = Generate(Candidates.Value)
                 .Except(Movies.Titles)
+                .Except(recentPosts)
                 .First();
-            await Task.WhenAll(PostToMastodon(newTitle), PostToTwitter(newTitle));
-        }
 
-        private static async Task PostToMastodon(string s)
-        {
-            await Mastodon.Api.Statuses.Posting(
-                Environment.GetEnvironmentVariable("MastodonDomain"),
-                Environment.GetEnvironmentVariable("MastodonAccessToken"),
-                s);
-        }
+            int previousId = await context.GeneratedPosts
+                .OrderByDescending(post => post.Id)
+                .Select(post => post.Id)
+                .DefaultIfEmpty(0)
+                .FirstAsync();
 
-        private static async Task PostToTwitter(string s)
-        {
-            Tweetinvi.Auth.SetUserCredentials(
-                Environment.GetEnvironmentVariable("TwitterConsumerKey"),
-                Environment.GetEnvironmentVariable("TwitterConsumerSecret"),
-                Environment.GetEnvironmentVariable("TwitterTokenKey"),
-                Environment.GetEnvironmentVariable("TwitterTokenSecret"));
+            var newPost = new GeneratedPost
+            {
+                Id = previousId + 1,
+                Content = newTitle,
+                CreatedAt = DateTimeOffset.UtcNow
+            };
 
-            await Tweetinvi.TweetAsync.PublishTweet(s);
+            context.GeneratedPosts.Add(newPost);
+
+            string createActivityJson = ActivityPubSerializer.SerializeWithContext(
+                translator.ObjectToCreate(
+                    Domain.AsPost(
+                        newPost)));
+
+            foreach (string inbox in await inboxLocator.GetDistinctInboxesAsync())
+            {
+                context.OutboundActivities.Add(new OutboundActivity
+                {
+                    Id = Guid.NewGuid(),
+                    Inbox = inbox,
+                    JsonBody = createActivityJson,
+                    StoredAt = DateTimeOffset.UtcNow
+                });
+            }
+
+            await context.SaveChangesAsync();
         }
 
         [GeneratedRegex("( -)? Part ([XVI]+|[1-9]+)$")]

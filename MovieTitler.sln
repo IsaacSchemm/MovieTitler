@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieTitler", "MovieTitler\MovieTitler.csproj", "{999B9FB7-0C48-4758-B823-0AEBE30E1E60}"
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MovieTitler.Generation", "MovieTitler.Generation\MovieTitler.Generation.fsproj", "{E4994B66-0EA4-45B7-A544-30DEECC4DE2B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieTitler.Data", "MovieTitler.Data\MovieTitler.Data.csproj", "{3E880FC1-E5A0-4477-9EEF-7AC3DA1AF15C}"
@@ -13,7 +11,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MovieTitler.LowLevel", "Mov
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MovieTitler.Interfaces", "MovieTitler.Interfaces\MovieTitler.Interfaces.vbproj", "{04149368-9146-4092-AC54-C458C4402A0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieTitler.HighLevel", "MovieTitler.HighLevel\MovieTitler.HighLevel.csproj", "{BF7402A3-3F4E-4034-890D-D0BE337A0E74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieTitler.HighLevel", "MovieTitler.HighLevel\MovieTitler.HighLevel.csproj", "{BF7402A3-3F4E-4034-890D-D0BE337A0E74}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieTitler", "MovieTitler\MovieTitler.csproj", "{AE6A0CE3-CB21-420E-AF4F-6E9B47AA226C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{999B9FB7-0C48-4758-B823-0AEBE30E1E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{999B9FB7-0C48-4758-B823-0AEBE30E1E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{999B9FB7-0C48-4758-B823-0AEBE30E1E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{999B9FB7-0C48-4758-B823-0AEBE30E1E60}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E4994B66-0EA4-45B7-A544-30DEECC4DE2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E4994B66-0EA4-45B7-A544-30DEECC4DE2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4994B66-0EA4-45B7-A544-30DEECC4DE2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,6 +41,10 @@ Global
 		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE6A0CE3-CB21-420E-AF4F-6E9B47AA226C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE6A0CE3-CB21-420E-AF4F-6E9B47AA226C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE6A0CE3-CB21-420E-AF4F-6E9B47AA226C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE6A0CE3-CB21-420E-AF4F-6E9B47AA226C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

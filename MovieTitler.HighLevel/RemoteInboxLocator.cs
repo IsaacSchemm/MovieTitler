@@ -7,7 +7,7 @@ namespace MovieTitler.HighLevel
         /// <summary>
         /// Gets the URLs of known inboxes.
         /// </summary>
-        /// <param name="followersOnly">Whether to limit the set to only followers' servers. If false, Crowmask will include all known inboxes.</param>
+        /// <param name="followersOnly">Whether to limit the set to only followers' servers. If false, the bot will include all known inboxes.</param>
         /// <returns>A set of inbox URLs</returns>
         public async Task<IReadOnlySet<string>> GetDistinctInboxesAsync(bool followersOnly = false)
         {
