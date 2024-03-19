@@ -12,24 +12,24 @@ using MovieTitler.Interfaces;
 using MovieTitler.LowLevel;
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWebApplication()
+    .ConfigureFunctionsWorkerDefaults()
     .ConfigureServices(services =>
     {
         if (Environment.GetEnvironmentVariable("CosmosDBAccountKey") is string accountKey)
             services.AddDbContext<BotDbContext>(options => options.UseCosmos(
-                Environment.GetEnvironmentVariable("CosmosDBAccountEndpoint"),
+                Environment.GetEnvironmentVariable("CosmosDBAccountEndpoint")!,
                 accountKey,
                 databaseName: "MovieTitler"));
         else
             services.AddDbContext<BotDbContext>(options => options.UseCosmos(
-                Environment.GetEnvironmentVariable("CosmosDBAccountEndpoint"),
+                Environment.GetEnvironmentVariable("CosmosDBAccountEndpoint")!,
                 new DefaultAzureCredential(),
                 databaseName: "MovieTitler"));
 
         services.AddSingleton<IApplicationInformation>(new AppInfo(
             ApplicationName: "MovieTitler",
             VersionNumber: "1.0",
-            ApplicationHostname: Environment.GetEnvironmentVariable("ApplicationHost"),
+            ApplicationHostname: Environment.GetEnvironmentVariable("ApplicationHost")!,
             WebsiteUrl: $"https://github.com/IsaacSchemm/MovieTitler"));
 
         services.AddSingleton<IActorKeyProvider>(

@@ -122,15 +122,15 @@ type ActivityPubTranslator(mapper: IdMapper) =
     ]
 
     /// Builds an OrderedCollection to represent the user's outbox.
-    member _.AsOutbox (postHistory: PostHistory) = dict [
+    member _.AsOutbox (outbox: Outbox) = dict [
         pair "id" $"{actor}/outbox"
         pair "type" "OrderedCollection"
-        pair "totalItems" postHistory.post_count
+        pair "totalItems" outbox.post_count
         pair "first" $"{actor}/outbox/page"
     ]
 
     /// Builds an OrderedCollectionPage to represent a single page of the user's outbox.
-    member this.AsOutboxPage (id: string) (page: PostHistoryPage) = dict [
+    member this.AsOutboxPage (id: string) (page: OutboxPage) = dict [
         pair "id" id
         pair "type" "OrderedCollectionPage"
 

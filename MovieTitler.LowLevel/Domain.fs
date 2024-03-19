@@ -15,13 +15,13 @@ type Post = {
     created: DateTimeOffset
 }
 
-/// The main page of the user's post history (not the first page).
-type PostHistory = {
+/// The user's outbox endpoint.
+type Outbox = {
     post_count: int
 }
 
-/// A single page of the user's post history.
-type PostHistoryPage = {
+/// A single page of the user's outbox.
+type OutboxPage = {
     posts: Post list
     nextid: int
 }
@@ -37,11 +37,11 @@ module Domain =
         created = generatedPost.CreatedAt
     }
 
-    let AsGallery(count: int) = {
+    let AsOutbox(count: int) = {
         post_count = count
     }
 
-    let AsGalleryPage(posts: Post seq, nextid: int) = {
+    let AsOutboxPage(posts: Post seq, nextid: int) = {
         posts = Seq.toList posts
         nextid = nextid
     }

@@ -1,9 +1,7 @@
-using MovieTitler.HighLevel;
 using MovieTitler.LowLevel;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using System.Net;
-using System.Threading.Tasks;
 using MovieTitler.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,8 +10,7 @@ namespace MovieTitler.Functions
     public class Outbox(
         ActivityPubTranslator translator,
         BotDbContext context,
-        ContentNegotiator negotiator,
-        MarkdownTranslator markdownTranslator)
+        ContentNegotiator negotiator)
     {
         /// <summary>
         /// Returns the size of the user's outbox and a link to the first page.
@@ -26,25 +23,17 @@ namespace MovieTitler.Functions
         {
             int count = await context.GeneratedPosts.CountAsync();
 
-            var gallery = Domain.AsGallery(count: count);
+            var outbox = Domain.AsOutbox(count: count);
 
             foreach (var format in negotiator.GetAcceptableFormats(req.Headers))
             {
                 if (format.Family.IsActivityPub)
                 {
-                    var outbox = translator.AsOutbox(gallery);
-
-                    string json = ActivityPubSerializer.SerializeWithContext(outbox);
+                    string json = ActivityPubSerializer.SerializeWithContext(
+                        translator.AsOutbox(
+                            outbox));
 
                     return await req.WriteResponseAsync(format, json);
-                }
-                else if (format.Family.IsHTML)
-                {
-                    return await req.WriteResponseAsync(format, markdownTranslator.ToHtml(gallery));
-                }
-                else if (format.Family.IsMarkdown)
-                {
-                    return await req.WriteResponseAsync(format, markdownTranslator.ToMarkdown(gallery));
                 }
             }
 

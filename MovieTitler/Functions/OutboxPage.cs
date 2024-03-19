@@ -34,11 +34,12 @@ namespace MovieTitler.Functions
                 : int.MaxValue;
 
             var posts = await context.GeneratedPosts
-                .OrderByDescending(post => post.CreatedAt)
+                .Where(post => post.Id < nextid)
+                .OrderByDescending(post => post.Id)
                 .Take(20)
                 .ToListAsync();
 
-            var galleryPage = Domain.AsGalleryPage(posts.Select(Domain.AsPost), nextid);
+            var outboxPage = Domain.AsOutboxPage(posts.Select(Domain.AsPost), nextid);
 
             var person = Domain.Actor;
 
@@ -51,27 +52,28 @@ namespace MovieTitler.Functions
             {
                 if (format.Family.IsActivityPub)
                 {
-                    var outboxPage = translator.AsOutboxPage(req.Url.OriginalString, galleryPage);
-
-                    string json = ActivityPubSerializer.SerializeWithContext(outboxPage);
+                    string json = ActivityPubSerializer.SerializeWithContext(
+                        translator.AsOutboxPage(
+                            req.Url.OriginalString,
+                            outboxPage));
 
                     return await req.WriteResponseAsync(format, json);
                 }
                 else if (format.Family.IsHTML)
                 {
-                    return await req.WriteResponseAsync(format, markdownTranslator.ToHtml(galleryPage));
+                    return await req.WriteResponseAsync(format, markdownTranslator.ToHtml(outboxPage));
                 }
                 else if (format.Family.IsMarkdown)
                 {
-                    return await req.WriteResponseAsync(format, markdownTranslator.ToMarkdown(galleryPage));
+                    return await req.WriteResponseAsync(format, markdownTranslator.ToMarkdown(outboxPage));
                 }
                 else if (format.Family.IsRSS)
                 {
-                    return await req.WriteResponseAsync(format, feedBuilder.ToRssFeed(person, galleryPage.posts));
+                    return await req.WriteResponseAsync(format, feedBuilder.ToRssFeed(person, outboxPage.posts));
                 }
                 else if (format.Family.IsAtom)
                 {
-                    return await req.WriteResponseAsync(format, feedBuilder.ToAtomFeed(person, galleryPage.posts));
+                    return await req.WriteResponseAsync(format, feedBuilder.ToAtomFeed(person, outboxPage.posts));
                 }
             }
 

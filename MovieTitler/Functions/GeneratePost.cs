@@ -12,8 +12,8 @@ namespace MovieTitler.Functions
     {
         public class TitlesObject
         {
-            public IReadOnlyList<string> Titles { get; set; }
-            public IReadOnlyList<string> Subtitles { get; set; }
+            public IReadOnlyList<string> Titles { get; set; } = [];
+            public IReadOnlyList<string> Subtitles { get; set; } = [];
         }
 
         private static readonly Regex PARTX = PartPattern();
@@ -95,20 +95,21 @@ namespace MovieTitler.Functions
         {
             var recentPosts = await context.GeneratedPosts
                 .OrderByDescending(post => post.Id)
-                .Select(post => post.Content)
                 .Take(90)
                 .ToListAsync();
 
+            var recentContent = recentPosts
+                .Select(post => post.Content);
+
             string newTitle = Generate(Candidates.Value)
                 .Except(Movies.Titles)
-                .Except(recentPosts)
+                .Except(recentContent)
                 .First();
 
-            int previousId = await context.GeneratedPosts
-                .OrderByDescending(post => post.Id)
+            int previousId = recentPosts
                 .Select(post => post.Id)
                 .DefaultIfEmpty(0)
-                .FirstAsync();
+                .Max();
 
             var newPost = new GeneratedPost
             {

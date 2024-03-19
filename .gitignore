@@ -4,3 +4,4 @@ obj
 *.user
 local.settings.json
 PublishProfiles
+*Zip Deploy*

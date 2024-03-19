@@ -17,7 +17,7 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         <html>
         <head>
             <title>
-            $"{enc title} - ${enc appInfo.ApplicationName}"
+            {enc title} - {enc appInfo.ApplicationName}
             </title>
             <meta name='viewport' content='width=device-width, initial-scale=1' />
         </head>
@@ -31,9 +31,11 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         for post in recentSubmissions do
             $"# {enc post.content}"
             $""
+            $"""[{post.created.UtcDateTime.ToString("MMM d, yyyy")}]({mapper.GetObjectId(post.id)})"""
+            $""
             $"----------"
             $""
-        $"@{enc person.username}@{appInfo.ApplicationHostname}"
+        $"`@{enc person.username}@{appInfo.ApplicationHostname}`"
         $""
         $"[View post history](/api/actor/outbox/page)"
         $""
@@ -43,7 +45,10 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $""
         $"--------"
         $""
-        $"## [{enc appInfo.ApplicationName} {enc appInfo.VersionNumber}]({appInfo.WebsiteUrl})"
+        $"<details>"
+        $"<summary>About</summary>"
+        $""
+        $"[{enc appInfo.ApplicationName} {enc appInfo.VersionNumber}]({appInfo.WebsiteUrl})"
         $""
         $"This program is free software: you can redistribute it and/or modify"
         $"it under the terms of the GNU Affero General Public License as published"
@@ -54,46 +59,29 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $"but WITHOUT ANY WARRANTY; without even the implied warranty of"
         $"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
         $"GNU Affero General Public License for more details."
+        $"</details>"
     ]
 
     member this.ToHtml (person: Person, recentSubmissions: Post seq) =
         this.ToMarkdown (person, recentSubmissions)
-        |> toHtml appInfo.ApplicationName
+        |> toHtml person.username
 
-    member _.ToMarkdown (post: Post) = $"""
-        # {enc post.content}
-
-        [{post.created.UtcDateTime.ToString("MMM d, yyyy")}]({mapper.GetObjectId(post.id)})
-    """
+    member _.ToMarkdown (post: Post) = String.concat "\n" [
+        $"# {enc post.content}"
+        $""
+        $"""[{post.created.UtcDateTime.ToString("MMM d, yyyy")}]({mapper.GetObjectId(post.id)})"""
+    ]
 
     member this.ToHtml (post: Post) =
         this.ToMarkdown post
-        |> toHtml appInfo.ApplicationName
+        |> toHtml "Post"
 
-    member _.ToMarkdown (postHistory: PostHistory) = String.concat "\n" [
-        $"## Post History"
-        $""
-        $"{postHistory.post_count} item(s)."
-        $""
-        $"[Start from first page](/api/actor/outbox/page)"
-        $""
-    ]
-
-    member this.ToHtml (postHistory: PostHistory) =
-        this.ToMarkdown postHistory
-        |> toHtml $"{appInfo.ApplicationName} - Post History"
-
-    member _.ToMarkdown (page: PostHistoryPage) = String.concat "\n" [
-        $"## Posts"
-        $""
+    member this.ToMarkdown (page: OutboxPage) = String.concat "\n" [
         for post in page.posts do
-            let post_url = mapper.GetObjectId(post.id)
-
-            $"### [{enc post.content}]({post_url})"
+            this.ToMarkdown(post)
             $""
-            enc (post.created.UtcDateTime.ToString("MMM d, yyyy"))
+            $"--------"
             $""
-        $""
         if page.posts <> [] then
             $"[View more posts](/api/actor/outbox/page?nextid={List.min [for p in page.posts do p.id]})"
         else
@@ -101,6 +89,6 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         $""
     ]
 
-    member this.ToHtml (page: PostHistoryPage) =
+    member this.ToHtml (page: OutboxPage) =
         this.ToMarkdown page
-        |> toHtml $"{appInfo.ApplicationName} - Post History"
+        |> toHtml "Post History"
