@@ -9,9 +9,11 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MovieTitler.Generation", "M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieTitler.Data", "MovieTitler.Data\MovieTitler.Data.csproj", "{3E880FC1-E5A0-4477-9EEF-7AC3DA1AF15C}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MovieTitler.LowLevel", "MovieTitler.LowLevel\MovieTitler.LowLevel.fsproj", "{FD4160D7-AFEA-4C3D-8390-3F3BFECDE0DD}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "MovieTitler.LowLevel", "MovieTitler.LowLevel\MovieTitler.LowLevel.fsproj", "{FD4160D7-AFEA-4C3D-8390-3F3BFECDE0DD}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MovieTitler.Interfaces", "MovieTitler.Interfaces\MovieTitler.Interfaces.vbproj", "{04149368-9146-4092-AC54-C458C4402A0D}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "MovieTitler.Interfaces", "MovieTitler.Interfaces\MovieTitler.Interfaces.vbproj", "{04149368-9146-4092-AC54-C458C4402A0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieTitler.HighLevel", "MovieTitler.HighLevel\MovieTitler.HighLevel.csproj", "{BF7402A3-3F4E-4034-890D-D0BE337A0E74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{04149368-9146-4092-AC54-C458C4402A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04149368-9146-4092-AC54-C458C4402A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04149368-9146-4092-AC54-C458C4402A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7402A3-3F4E-4034-890D-D0BE337A0E74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
