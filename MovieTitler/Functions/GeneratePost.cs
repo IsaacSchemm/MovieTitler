@@ -86,12 +86,12 @@ namespace MovieTitler.Functions
         }
 
         /// <summary>
-        /// Creates and sends a new post. Runs every day at 5:00 AM.
+        /// Creates and sends a new post. Runs every day at 01:00 UTC.
         /// </summary>
         /// <param name="myTimer"></param>
         /// <returns></returns>
         [Function("GeneratePost")]
-        public async Task Run([TimerTrigger("0 0 5 * * *")] TimerInfo myTimer)
+        public async Task Run([TimerTrigger("0 0 1 * * *")] TimerInfo myTimer)
         {
             var recentPosts = await context.GeneratedPosts
                 .OrderByDescending(post => post.Id)
