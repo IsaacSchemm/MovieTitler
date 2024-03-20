@@ -5,16 +5,15 @@ using MovieTitler.Generation;
 using Microsoft.EntityFrameworkCore;
 using MovieTitler.LowLevel;
 using MovieTitler.HighLevel;
+using Microsoft.FSharp.Collections;
 
 namespace MovieTitler.Functions
 {
     public partial class GeneratePost(ActivityPubTranslator translator, BotDbContext context, RemoteInboxLocator inboxLocator)
     {
-        public class TitlesObject
-        {
-            public IReadOnlyList<string> Titles { get; set; } = [];
-            public IReadOnlyList<string> Subtitles { get; set; } = [];
-        }
+        public record TitlesObject(
+            FSharpSet<string> Titles,
+            FSharpSet<string> Subtitles);
 
         private static readonly Regex PARTX = PartPattern();
 
@@ -25,8 +24,8 @@ namespace MovieTitler.Functions
                 most_recent_year_max: 100,
                 other_years_max: 50);
 
-            HashSet<string> titles = [];
-            HashSet<string> subtitles = [];
+            FSharpSet<string> titles = SetModule.Empty<string>();
+            FSharpSet<string> subtitles = SetModule.Empty<string>();
 
             foreach (var movie in all)
             {
@@ -59,16 +58,14 @@ namespace MovieTitler.Functions
                     if (title == "Beauty" && subtitle.StartsWith("Beast"))
                         continue;
 
-                    titles.Add(title);
-                    subtitles.Add(subtitle);
+                    titles = titles.Add(title);
+                    subtitles = subtitles.Add(subtitle);
                 }
             }
 
-            return new TitlesObject
-            {
-                Titles = [.. titles],
-                Subtitles = [.. subtitles]
-            };
+            return new TitlesObject(
+                Titles: titles,
+                Subtitles: subtitles);
         });
 
         private static readonly Random R = new();
@@ -79,19 +76,19 @@ namespace MovieTitler.Functions
             {
                 int index1 = R.Next(0, obj.Titles.Count);
                 int index2 = R.Next(0, obj.Subtitles.Count);
-                string part1 = obj.Titles[index1];
-                string part2 = obj.Subtitles[index2];
+                string part1 = obj.Titles.ElementAt(index1);
+                string part2 = obj.Subtitles.ElementAt(index2);
                 yield return part1 + part2;
             }
         }
 
         /// <summary>
-        /// Creates and sends a new post. Runs every day at 01:00 UTC.
+        /// Creates and sends a new post. Runs every day at 06:00 UTC.
         /// </summary>
         /// <param name="myTimer"></param>
         /// <returns></returns>
         [Function("GeneratePost")]
-        public async Task Run([TimerTrigger("0 0 1 * * *")] TimerInfo myTimer)
+        public async Task Run([TimerTrigger("0 0 6 * * *")] TimerInfo myTimer)
         {
             var recentPosts = await context.GeneratedPosts
                 .OrderByDescending(post => post.Id)
