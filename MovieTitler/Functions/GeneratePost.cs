@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieTitler.LowLevel;
 using MovieTitler.HighLevel;
 using Microsoft.FSharp.Collections;
+using System.Net;
 
 namespace MovieTitler.Functions
 {
@@ -111,7 +112,7 @@ namespace MovieTitler.Functions
             var newPost = new GeneratedPost
             {
                 Id = previousId + 1,
-                Content = newTitle,
+                Content = $"<p>{WebUtility.HtmlEncode(newTitle)}</p>",
                 CreatedAt = DateTimeOffset.UtcNow
             };
 

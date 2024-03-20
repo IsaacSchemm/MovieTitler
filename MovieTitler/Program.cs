@@ -28,7 +28,7 @@ var host = new HostBuilder()
 
         services.AddSingleton<IApplicationInformation>(new AppInfo(
             ApplicationName: "MovieTitler",
-            VersionNumber: "3.1",
+            VersionNumber: "3.2",
             ApplicationHostname: Environment.GetEnvironmentVariable("ApplicationHost")!,
             WebsiteUrl: $"https://github.com/IsaacSchemm/MovieTitler"));
 

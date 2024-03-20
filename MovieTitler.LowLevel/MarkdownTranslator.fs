@@ -20,6 +20,12 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
             {enc title} - {enc appInfo.ApplicationName}
             </title>
             <meta name='viewport' content='width=device-width, initial-scale=1' />
+            <style type='text/css'>
+                body {{
+                    text-align: center;
+                    font-family: sans-serif;
+                }}
+            </style>
         </head>
         <body>
             {Markdig.Markdown.ToHtml(str)}
@@ -28,7 +34,7 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
     """
 
     member _.ToMarkdown (post: Post) = String.concat "\n" [
-        $"# {enc post.content}"
+        $"# {post.content}"
         $""
         $"""[{post.created.UtcDateTime.ToString("MMMM d, yyyy (hh:mm)")}]({mapper.GetObjectId(post.id)})"""
     ]
