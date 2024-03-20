@@ -27,11 +27,19 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
         </html>
     """
 
-    member _.ToMarkdown (person: Person, recentSubmissions: Post seq) = String.concat "\n" [
+    member _.ToMarkdown (post: Post) = String.concat "\n" [
+        $"# {enc post.content}"
+        $""
+        $"""[{post.created.UtcDateTime.ToString("MMMM d, yyyy (hh:mm)")}]({mapper.GetObjectId(post.id)})"""
+    ]
+
+    member this.ToHtml (post: Post) =
+        this.ToMarkdown post
+        |> toHtml "Post"
+
+    member this.ToMarkdown (person: Person, recentSubmissions: Post seq) = String.concat "\n" [
         for post in recentSubmissions do
-            $"# {enc post.content}"
-            $""
-            $"""[{post.created.UtcDateTime.ToString("MMM d, yyyy")}]({mapper.GetObjectId(post.id)})"""
+            this.ToMarkdown(post)
             $""
             $"----------"
             $""
@@ -65,16 +73,6 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
     member this.ToHtml (person: Person, recentSubmissions: Post seq) =
         this.ToMarkdown (person, recentSubmissions)
         |> toHtml person.username
-
-    member _.ToMarkdown (post: Post) = String.concat "\n" [
-        $"# {enc post.content}"
-        $""
-        $"""[{post.created.UtcDateTime.ToString("MMM d, yyyy")}]({mapper.GetObjectId(post.id)})"""
-    ]
-
-    member this.ToHtml (post: Post) =
-        this.ToMarkdown post
-        |> toHtml "Post"
 
     member this.ToMarkdown (page: OutboxPage) = String.concat "\n" [
         for post in page.posts do
