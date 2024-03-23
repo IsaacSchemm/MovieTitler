@@ -23,7 +23,8 @@ namespace MovieTitler.HighLevel.Feed
                 Id = mapper.GetObjectId(post.id),
                 PublishDate = post.created,
                 LastUpdatedTime = post.created,
-                Content = new TextSyndicationContent(string.Join(" ", post.content), TextSyndicationContentKind.Html)
+                Content = new TextSyndicationContent(string.Join(" ", post.content), TextSyndicationContentKind.Html),
+                Title = new TextSyndicationContent(string.Join(" ", post.content), TextSyndicationContentKind.Html)
             };
 
             item.Links.Add(SyndicationLink.CreateAlternateLink(new Uri(mapper.GetObjectId(post.id)), "text/html"));
@@ -43,8 +44,7 @@ namespace MovieTitler.HighLevel.Feed
             var feed = new SyndicationFeed
             {
                 Id = uri,
-                Title = new TextSyndicationContent($"@{Domain.Actor.username}@{appInfo.ApplicationHostname}", TextSyndicationContentKind.Plaintext),
-                Description = new TextSyndicationContent($"An automated bot account", TextSyndicationContentKind.Plaintext),
+                Title = new TextSyndicationContent(appInfo.ApplicationName, TextSyndicationContentKind.Plaintext),
                 LastUpdatedTime = posts.Select(x => x.created).Max(),
                 Items = posts.Select(ToSyndicationItem)
             };
