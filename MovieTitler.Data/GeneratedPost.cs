@@ -17,10 +17,10 @@ namespace MovieTitler.Data
         public int Id { get; set; }
 
         /// <summary>
-        /// The post text (HTML).
+        /// The post text (plain text).
         /// </summary>
         [Required]
-        public string Content { get; set; }
+        public string TextContent { get; set; }
 
         /// <summary>
         /// When the post text was generated.

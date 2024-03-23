@@ -2,6 +2,7 @@
 
 open System
 open System.Collections.Generic
+open System.Net
 open System.Text.Json
 open MovieTitler.Interfaces
 
@@ -74,7 +75,7 @@ type ActivityPubTranslator(mapper: IdMapper) =
         pair "type" "Note"
 
         pair "attributedTo" actor
-        pair "content" post.content
+        pair "content" $"<p>{WebUtility.HtmlEncode post.text}</p>"
         pair "published" post.created
         pair "to" "https://www.w3.org/ns/activitystreams#Public"
         pair "cc" [$"{actor}/followers"]

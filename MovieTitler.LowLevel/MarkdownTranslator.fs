@@ -34,7 +34,7 @@ type MarkdownTranslator(mapper: IdMapper, appInfo: IApplicationInformation) =
     """
 
     member _.ToMarkdown (post: Post) = String.concat "\n" [
-        $"# {post.content}"
+        $"# {enc post.text}"
         $""
         $"""[{post.created.UtcDateTime.ToString("MMMM d, yyyy (hh:mm)")}]({mapper.GetObjectId(post.id)})"""
     ]

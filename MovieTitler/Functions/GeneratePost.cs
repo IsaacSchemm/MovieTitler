@@ -97,7 +97,7 @@ namespace MovieTitler.Functions
                 .ToListAsync();
 
             var recentContent = recentPosts
-                .Select(post => post.Content);
+                .Select(post => post.TextContent);
 
             string newTitle = Generate(Candidates.Value)
                 .Except(Movies.Titles)
@@ -112,7 +112,7 @@ namespace MovieTitler.Functions
             var newPost = new GeneratedPost
             {
                 Id = previousId + 1,
-                Content = $"<p>{WebUtility.HtmlEncode(newTitle)}</p>",
+                TextContent = newTitle,
                 CreatedAt = DateTimeOffset.UtcNow
             };
 

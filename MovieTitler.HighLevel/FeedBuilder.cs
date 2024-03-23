@@ -23,8 +23,8 @@ namespace MovieTitler.HighLevel.Feed
                 Id = mapper.GetObjectId(post.id),
                 PublishDate = post.created,
                 LastUpdatedTime = post.created,
-                Content = new TextSyndicationContent(string.Join(" ", post.content), TextSyndicationContentKind.Html),
-                Title = new TextSyndicationContent(string.Join(" ", post.content), TextSyndicationContentKind.Html)
+                Content = new TextSyndicationContent(string.Join(" ", post.text), TextSyndicationContentKind.Plaintext),
+                Title = new TextSyndicationContent(string.Join(" ", post.text), TextSyndicationContentKind.Plaintext)
             };
 
             item.Links.Add(SyndicationLink.CreateAlternateLink(new Uri(mapper.GetObjectId(post.id)), "text/html"));

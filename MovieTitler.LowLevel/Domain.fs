@@ -12,7 +12,7 @@ type Person = {
 /// A post to expose over ActivityPub.
 type Post = {
     id: int
-    content: string
+    text: string
     created: DateTimeOffset
 }
 
@@ -35,7 +35,7 @@ module Domain =
 
     let AsPost (generatedPost: GeneratedPost) = {
         id = generatedPost.Id
-        content = generatedPost.Content
+        text = generatedPost.TextContent
         created = generatedPost.CreatedAt
     }
 
