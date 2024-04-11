@@ -2,7 +2,7 @@
 -----------
 
 This is the source code for the MovieTitler ActivityPub bot
-[https://movietitler.azurewebsites.net/](@bot@movietitler.azurewebsites.net).
+(@bot@movietitler.azurewebsites.net)[https://movietitler.azurewebsites.net].
 
 Every day, MovieTitler will generate a new movie title by combining the title
 of one film and the subtitle of another (excluding real movie titles that it
