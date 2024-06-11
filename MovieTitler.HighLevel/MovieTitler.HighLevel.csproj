@@ -8,8 +8,8 @@
 
   <ItemGroup>
     <PackageReference Include="json-ld.net" Version="1.0.7" />
-    <PackageReference Include="NSign.Client" Version="1.0.0" />
-    <PackageReference Include="NSign.SignatureProviders" Version="1.0.0" />
+    <PackageReference Include="NSign.Client" Version="1.0.2" />
+    <PackageReference Include="NSign.SignatureProviders" Version="1.0.2" />
     <PackageReference Include="System.ServiceModel.Syndication" Version="8.0.0" />
   </ItemGroup>
 
